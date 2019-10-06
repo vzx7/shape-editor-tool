@@ -1,0 +1,54 @@
+@import "common-blocks/dialog.scss";
+@import "common-blocks/button.scss";
+
+:host {
+ font-family: "Helvetica Neue";
+}
+
+:host ::ng-deep .nsm-content {
+  width: 360px;
+}
+
+.delete {
+  width: 178px;
+  padding: 13px 10px;
+  padding-left: 30px;
+  font-size: 15px;
+  line-height: 17px;
+  background: url("/assets/images/icons/garbage.svg") no-repeat 10px 11px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.back {
+  width: 201px;
+  padding: 13px 10px;
+  font-size: 15px;
+  line-height: 17px;
+  background-color: $background-color;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dialog-content {
+  .card--bordered:first-child {
+    margin-top: 0;
+  }
+}
+
+.draggable {
+  &--multiselect {
+    position: absolute;
+    top: 3%;
+    right: 8.7%;
+  }
+
+  &--multiselect-info {
+    position: absolute;
+    top: 3%;
+    right: 8.7%;
+  }
+}

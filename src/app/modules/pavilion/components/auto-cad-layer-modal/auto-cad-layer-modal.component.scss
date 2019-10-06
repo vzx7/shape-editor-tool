@@ -1,0 +1,24 @@
+@import "common-blocks/dialog.scss";
+@import "common-blocks/button.scss";
+
+:host {
+ font-family: "Arial";
+}
+
+:host ::ng-deep .nsm-content {
+  width: 360px;
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+}
+
+:host ::ng-deep .nsm-dialog {
+  right: 0;
+}
+
+.draggable {
+  &--autocad-layer {
+    position: absolute;
+    top: 0;
+    right: 43%;
+  }
+}

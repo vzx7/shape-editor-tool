@@ -1,0 +1,14 @@
+<div class="search-panel">
+  <button
+    class="button-icon search-panel__button button button--main button-icon--rounded button--position-vertical"
+    [ngClass]="{ 'button--active': isActive, 'button--main': !isActive }"
+    [cacheSVG]="false"
+    [inlineSVG]="'assets/images/icons/search.svg'"
+    (click)="callHandler()"
+  ></button>
+
+  <div *ngIf="isActive" class="search-panel__input">
+    <input #search (keyup.enter)="searchStands(search.value)" class="search search--rounded" type="search"/>
+    <button (click)="clear()" class="search-button button button-search">X</button>
+  </div>
+</div>

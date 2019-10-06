@@ -1,0 +1,71 @@
+<div ngDraggable class="draggable">
+  <ngx-smart-modal target="app-zones" #modal [identifier]="modalName.Zones">
+    <div class="dialog-content">
+      <div class="card">
+        <h2>Зонирование</h2>
+        <div class="card__item card__item--border-top">
+          <div class="card__header">Отображение</div>
+          <div class="card__item card__item--space-between">
+            <div class="card__text-15">
+              Показать зонирование на схеме-участника
+            </div>
+            <button
+              class="button simple button-toggler"
+              [cacheSVG]="false"
+              [inlineSVG]="iconPath"
+              (click)="switch()"
+            ></button>
+          </div>
+        </div>
+        <div class="card__item card__item--space-between">
+            <button class="button button--main button--bordered button--rounded-border-10">
+              Перенести с рабочей схемы
+            </button>
+            <button
+              class="button button-icon--small button-icon--rounded button--main"
+              [cacheSVG]="false"
+              [inlineSVG]="'assets/images/icons/plus.svg'"
+            >+</button>
+          </div>
+      </div>
+
+      <div *ngIf="zones">
+        <div *ngFor="let zone of zones" (click)="showInfo(zone)" class="card card--bordered clickable">
+          <div class="card__item">
+            <div class="card__header">Название</div>
+            <div class="card__item card__item--space-between">
+              <div class="card__text-15">
+                {{zone.name}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ngx-smart-modal>
+</div>
+
+<div ngDraggable class="draggable">
+  <ngx-smart-modal target="app-zones" #modal [identifier]="modalName.ZonesInfo">
+    <div *ngIf="chosenZone" class="dialog-content card">
+      <button (click)="getBack()" class="button button--main button--bordered button--rounded-border-10">
+        &larr; Зонирование
+      </button>
+      <div class="card__item card__item--grey card__item--border-bottom">
+          <div class="card__header">Название</div>
+          <div class="card__text-22">{{chosenZone.name}}</div>
+        </div>
+
+      <div class="card">
+        <div class="card__item card__item--border-top">
+          <div class="card__header">Заливка</div>
+          <div class="color-picker">
+              <input class="color-picker__input" type="color" (change)="onChange($event)" [value]="chosenZone.fill"/>
+              <div class="button button--main button--bordered">{{chosenZone.fill}}</div>
+              <button class="button button--main button--bordered">100%</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ngx-smart-modal>
+</div>

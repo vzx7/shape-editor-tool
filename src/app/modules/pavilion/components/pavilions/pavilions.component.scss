@@ -1,0 +1,27 @@
+@import "common-blocks/button.scss";
+
+.button {
+  &-icon {
+    &--pavilion {
+      width: 200px;
+      display: inline-grid;
+
+      ::ng-deep svg {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+      }
+
+      .button-inner-span {
+        text-align: left;
+        padding-left: 40px;
+      }
+    }
+  }
+
+  &--active {
+    .button-inner-span {
+      color: $background-color;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@import "common-blocks/button.scss";
+
+.zoom-panel {
+  left: $tool-left-and-right-indent;
+  top: 27%;
+  width: 50px;
+  justify-content: space-between;
+  position: absolute;
+  height: 302px;
+}
+
+::ng-deep rect.selection {
+  stroke: black;
+  stroke-dasharray: 4px;
+  stroke-opacity: 0.5;
+  fill: transparent;
+}

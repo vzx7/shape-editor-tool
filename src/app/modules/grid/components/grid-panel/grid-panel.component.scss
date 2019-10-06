@@ -1,0 +1,42 @@
+@import "params.scss";
+@import "common-blocks/button.scss";
+
+.grid-panel {
+  background-color: $background-color;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  min-height: 131px;
+  width: 48px;
+  position: absolute;
+  width: 48px;
+  top: 68%;
+  left: $tool-left-and-right-indent;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0;
+
+  &__item {
+    padding: 0;
+
+    &--active {
+      &-svg {
+        ::ng-deep svg path {
+          fill: $active-color;
+          background-color: $background-color;
+        }
+      }
+
+        background-color: $active-color;
+        color: $background-color;
+        border: 1px solid $active-color;
+    }
+  }
+}
+
+.button {
+  &--main {
+    padding: 0;
+  }
+}

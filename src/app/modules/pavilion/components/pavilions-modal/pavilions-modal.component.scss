@@ -1,0 +1,19 @@
+@import "common-blocks/dialog.scss";
+@import "common-blocks/button.scss";
+
+:host ::ng-deep .nsm-content {
+  width: 360px;
+}
+
+:host::ng-deep .nsm-dialog {
+  left: 0;
+}
+
+.draggable {
+  &--pavilion {
+    position: absolute;
+    top: 0;
+    right: 108%;
+    z-index: 2;
+  }
+}

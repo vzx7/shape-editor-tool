@@ -1,0 +1,10 @@
+@import "common-blocks/dialog.scss";
+
+:host ::ng-deep .nsm-content {
+  width: 360px;
+}
+
+.dialog-content {
+  padding: 40px;
+  text-align: center;
+}

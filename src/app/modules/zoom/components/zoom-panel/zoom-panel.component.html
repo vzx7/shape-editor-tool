@@ -1,0 +1,15 @@
+<div class="zoom-panel">
+  <button
+    class="button button-icon button--rounded-border-25 button--position-vertical button--main"
+    [cacheSVG]="false"
+    [inlineSVG]="'assets/images/icons/zoom-plus.svg'"
+    (click)="zoomPlus()"
+  ></button>
+  <app-zoom></app-zoom>
+  <button
+    class="button button-icon button--rounded-border-25 button--position-vertical button--main"
+    [cacheSVG]="false"
+    [inlineSVG]="'assets/images/icons/zoom-minus.svg'"
+    (click)="zoomMinus()"
+  ></button>
+</div>

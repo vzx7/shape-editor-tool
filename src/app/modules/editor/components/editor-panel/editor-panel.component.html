@@ -1,0 +1,6 @@
+<div class="editor-panel" [ngClass]="{'inactive': !isEditorActive}">
+  <app-polygon [editorState]="editorState" #polygon></app-polygon>
+  <app-rotator [editorState]="editorState" #rotator></app-rotator>
+  <app-movement [editorState]="editorState" #movement></app-movement>
+  <app-text [editorState]="editorState" #text></app-text>
+</div>

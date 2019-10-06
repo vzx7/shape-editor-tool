@@ -1,0 +1,7 @@
+<button
+  class="button button-icon button--rounded-border-25 button--position-vertical"
+  [ngClass]="{ 'button--active': isActive, 'button--main': !isActive }"
+  [cacheSVG]="false"
+  [inlineSVG]="'assets/images/icons/zoom-full.svg'"
+  (click)="callHandler()"
+></button>

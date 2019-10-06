@@ -1,0 +1,38 @@
+@import "common-blocks/dialog.scss";
+@import "common-blocks/button.scss";
+
+:host ::ng-deep .nsm-content {
+  width: 360px;
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+}
+
+:host ::ng-deep .nsm-dialog {
+  right: 229px;
+}
+
+.color-picker {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+
+  &__input {
+    border: none;
+    background-color: transparent;
+  }
+}
+
+input[type="color"] {
+	-webkit-appearance: none;
+	border: none;
+	width: 35px;
+	height: 35px;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+	border: none;
+}

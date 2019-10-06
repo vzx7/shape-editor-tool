@@ -1,0 +1,32 @@
+<div class="grid-panel">
+  <button
+    class="button button--main"
+    [ngClass]="{ 'grid-panel__item--active-svg': isActive }"
+    [cacheSVG]="false"
+    [inlineSVG]="'assets/images/icons/grid.svg'"
+    (click)="showGrid()"
+  >
+    40
+  </button>
+  <button
+    class="button button--main  button--rounded-border-2 button-icon--small grid-panel__item"
+    [ngClass]="{ 'grid-panel__item--active': isActive && step === gridSpacing.quarter }"
+    (click)="showGrid( gridSpacing.quarter)"
+  >
+    0.25
+  </button>
+  <button
+    class="button button--main button--rounded-border-2 button-icon--small grid-panel__item"
+    [ngClass]="{ 'grid-panel__item--active': isActive && step === gridSpacing.half }"
+    (click)="showGrid(gridSpacing.half)"
+  >
+    &#189; <span class="text text--12">m<sup>2</sup></span>
+  </button>
+  <button
+    class="button button--main button--rounded-border-2 button-icon--small grid-panel__item"
+    [ngClass]="{ 'grid-panel__item--active': isActive && step === gridSpacing.whole }"
+    (click)="showGrid(gridSpacing.whole)"
+  >
+    1 <span class="text text--12">m<sup>2</sup></span>
+  </button>
+</div>

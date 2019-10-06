@@ -1,0 +1,11 @@
+<div class="multi-select-panel">
+  <button
+    class="button button-icon button--rounded-border-10 button--position-vertical"
+    [ngClass]="{ 'button--active': isActive, 'button--main': !isActive }"
+    [cacheSVG]="false"
+    [inlineSVG]="'assets/images/icons/multiselect.svg'"
+    (click)="callHandler()"
+  ></button>
+</div>
+
+<app-multi-select-modal  #modal (afterEdit)="activateTool()"></app-multi-select-modal>

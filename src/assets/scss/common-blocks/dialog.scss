@@ -1,0 +1,275 @@
+// Color of overlay background
+$color-overlay: rgba(0, 0, 0, 0.5) !default;
+
+// Position of dialog
+$dialog-position-top: 1.75rem !default;
+
+// Transition time
+// !! The same as the hideDelay variable defined in ngx-smart-modal.component.ts
+$transition-duration: 500ms !default;
+
+// Transition effect
+// linear | ease | ease-in | ease-out | ease-in-out
+$transition-timing-function: ease-in-out !default;
+
+$dialog-position-right: 10px;
+
+@import "params.scss";
+@import "~ngx-smart-modal/ngx-smart-modal.scss";
+
+// Body if modal is opened
+body.dialog-open {
+  overflow: hidden;
+}
+
+// Close button in modal
+::ng-deep .nsm-dialog-btn-close {
+  border: 0;
+  background: none;
+  color: #2d2d2d;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+// Overlay
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: background-color $transition-duration;
+  background-color: transparent;
+  z-index: 999;
+
+  &.nsm-overlay-open {
+    background-color: none;
+  }
+
+  &.transparent {
+    background-color: transparent;
+  }
+}
+
+// Dialog modal
+::ng-deep .nsm-dialog {
+  position: absolute;
+  top: 50px;
+  right: 250px;
+  opacity: 1;
+  visibility: visible;
+  min-height: 200px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  pointer-events: none;
+
+  // When dialog is closing
+  &.nsm-dialog-close {
+    opacity: 0;
+  }
+
+  &.nsm-centered {
+    display: flex;
+    align-items: center;
+    min-height: calc(100% - (1.75rem * 2));
+  }
+}
+
+::ng-deep .nsm-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  background-clip: padding-box;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 0;
+  margin: $dialog-position-top;
+  box-shadow: 0 0 22px rgba(0, 0, 0, 0.25);
+  outline: 0;
+  background-color: $background-color;
+  left: 20% !important;
+  // For performance purpose
+  transform: translate3d(0, 0, 0);
+}
+
+.dialog-content {
+  padding: 20px;
+}
+
+.nsm-body {
+  position: relative;
+  flex: 1 1 auto;
+}
+
+/* *************************
+* Animations
+* *************************/
+
+.nsm-dialog[class*=nsm-dialog-animation-] {
+  transition: transform $transition-duration $transition-timing-function, opacity $transition-duration;
+}
+
+// Left to right (ltr)
+.nsm-dialog-animation-ltr {
+  transform: translate3d(-50%, 0, 0);
+
+  &.nsm-dialog-open {
+    transform: translate3d(0, 0, 0);
+  }
+
+  &.nsm-dialog-close {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+// Right to left (ltr)
+.nsm-dialog-animation-rtl {
+  transform: translate3d(50%, 0, 0);
+
+  &.nsm-dialog-open {
+    transform: translate3d(0, 0, 0);
+  }
+
+  &.nsm-dialog-close {
+    transform: translate3d(50%, 0, 0);
+  }
+}
+
+// Top to bottom (ttb)
+.nsm-dialog-animation-ttb {
+  transform: translate3d(0, -50%, 0);
+
+  &.nsm-dialog-open {
+    transform: translate3d(0, 0, 0);
+  }
+
+  &.nsm-dialog-close {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+// Bottom to top (btt)
+.nsm-dialog-animation-btt {
+  transform: translate3d(0, 50%, 0);
+
+  &.nsm-dialog-open {
+    transform: translate3d(0, 0, 0);
+  }
+
+  &.nsm-dialog-close {
+    transform: translate3d(0, 50%, 0);
+  }
+}
+
+.card {
+  &__item {
+    padding: 15px 0;
+
+    &--space-between {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &--border-top {
+      border-top: 0.5px solid rgba(0, 0, 0, 0.33);
+    }
+
+    &--border-bottom {
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.33);
+    }
+
+      &--grey {
+        background-color: #ececec;
+        padding: 5px;
+        margin-top: 5px;
+      }
+  }
+
+  .status {
+    font-size: 20px;
+    line-height: 24px;
+
+    &--chosen {
+      background-color: #ececec;
+      padding: 15px;
+      padding-bottom: 70px;
+
+      .card__header {
+        margin-top: 30px;
+      }
+    }
+
+    &--no-background {
+      margin: 15px;
+    }
+  }
+
+  &__header {
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px;
+  }
+
+  .info {
+    display: flex;
+    justify-content: flex-start;
+
+    &__item {
+      padding-right: 10px;
+      display: flex;
+      flex-direction: column;
+
+      &--small {
+        width: 30%;
+      }
+    }
+  }
+
+  &__text {
+    &-22 {
+      font-size: 20px;
+      line-height: 24px;
+      word-wrap: break-word;
+    }
+
+    &-24 {
+      font-size: 24px;
+      line-height: 29px;
+      word-wrap: break-word;
+    }
+  }
+
+  &--bordered {
+    border: 1px solid rgba(143, 143, 143, 0.48);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px 0;
+  }
+
+  &--no-border {
+    margin: 0;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px 0;
+  }
+
+  &--active {
+    background: rgba(255, 26, 26, 0.17);
+    border-radius: 5px;
+    border: 1px solid rgba(255, 26, 26, 0.17);
+  }
+}

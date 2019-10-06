@@ -1,0 +1,14 @@
+@import "params.scss";
+
+.objects-panel {
+  display: flex;
+  justify-content: space-between;
+  width: 196px;
+  position: absolute;
+  top: $tool-top-indent;
+  right: $tool-left-and-right-indent;
+
+  &.inactive {
+    display: none;
+  }
+}

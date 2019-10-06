@@ -1,0 +1,8 @@
+<button
+  class="button button-icon button--main button--rounded-border-10"
+  [cacheSVG]="false"
+  [inlineSVG]="'assets/images/icons/rotate.svg'"
+  [ngClass]="{ 'button--active': isActive, 'button--main': !isActive }"
+  (click)="callHandler()"
+>
+</button>

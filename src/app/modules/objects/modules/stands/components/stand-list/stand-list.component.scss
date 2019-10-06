@@ -1,0 +1,35 @@
+@import "common-blocks/dialog.scss";
+@import "common-blocks/button.scss";
+@import "~perfect-scrollbar/css/perfect-scrollbar.css";
+
+:host ::ng-deep .nsm-content {
+  width: 360px;
+}
+
+.draggable {
+  &--stand-list {
+    position: absolute;
+    top: 0;
+    right: 70%;
+  }
+
+  &--stand-info {
+    position: absolute;
+    top: 0;
+    right: 70%;
+  }
+}
+
+.dialog-content {
+  padding-top: 50px;
+
+  .card--bordered:first-child {
+    margin-top: 0;
+  }
+
+  .button {
+    &--main {
+      margin-top: 20px;
+    }
+  }
+}

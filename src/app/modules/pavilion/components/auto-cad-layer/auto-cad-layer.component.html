@@ -1,0 +1,10 @@
+<button
+  class="button button-icon button--main button--rounded-border-10"
+  [ngClass]="{ 'button--active': isActive, 'button--main': !isActive }"
+  [cacheSVG]="false"
+  [inlineSVG]="'assets/images/icons/auto-cad-layers.svg'"
+  (click)="callHandler()"
+>
+</button>
+
+<app-auto-cad-layer-modal #modal (closeHandler)="setActive($event)"></app-auto-cad-layer-modal>

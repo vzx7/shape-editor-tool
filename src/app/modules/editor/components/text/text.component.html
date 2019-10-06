@@ -1,0 +1,8 @@
+<button
+  [cacheSVG]="false"
+  class="button button-icon button--rounded-border-10"
+  [inlineSVG]="'assets/images/icons/text.svg'"
+  (click)="callHandler()"
+  [ngClass]="{ 'button--active': isActive, 'button--main': !isActive }"
+>
+</button>

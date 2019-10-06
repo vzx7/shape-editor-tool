@@ -1,0 +1,22 @@
+@import "common-blocks/button.scss";
+
+.multi-select-panel {
+  top: 58%;
+  left: $tool-left-and-right-indent;
+  width: 50px;
+  justify-content: space-between;
+  position: absolute;
+  height: 50px;
+}
+
+::ng-deep rect.selection {
+  stroke: black;
+  stroke-dasharray: 4px;
+  stroke-opacity: 0.5;
+  fill: transparent;
+}
+
+::ng-deep path.selected {
+  stroke: red;
+  stroke-width: 3px;
+}

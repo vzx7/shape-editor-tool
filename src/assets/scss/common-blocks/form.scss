@@ -1,0 +1,52 @@
+@import "params.scss";
+
+.form {
+    border: none;
+
+    &__group {
+        position: static;
+        margin: 0;
+
+        &--column {
+          display: flex;
+          flex-direction: column;
+        }
+
+        &--space-between {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    &__control {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    &__label {
+        padding: 17px 0 7px 0;
+        font-weight: normal;
+        line-height: 22px;
+        font-size: 16px;
+        opacity: 0.8;
+    }
+
+    &__footer {
+        margin-top: 20px;
+
+        &--space-between {
+          display: flex;
+          justify-content: space-between;
+        }
+    }
+}
+
+input.ng-dirty.ng-invalid:not(form) {
+  border: 1px solid red !important;
+  box-shadow: 0 0 2px red !important;
+}

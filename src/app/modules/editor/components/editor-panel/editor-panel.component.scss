@@ -1,0 +1,12 @@
+.editor-panel {
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+  position: absolute;
+  top: 11%;
+  right: 22%;
+
+  &.inactive {
+    display: none;
+  }
+}

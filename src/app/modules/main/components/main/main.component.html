@@ -1,0 +1,97 @@
+<div #mainContainer class="main-container">
+  <svg
+    id="main-container"
+    [attr.width]="workAreaService.getWidth()"
+    [attr.height]="workAreaService.getHeight()"
+    [attr.viewBox]="workAreaService.generateViewBox()"
+    viewport-fill="url(#grid)"
+    [ngClass]="{'hidden': !isShowSchema}"
+  >
+    <defs>
+      <pattern
+        id="grid"
+        [attr.width]="gridService.step"
+        [attr.height]="gridService.step"
+        patternUnits="userSpaceOnUse"
+      >
+        <path
+          d="M 80 0 L 0 0 0 80"
+          fill="none"
+          stroke="gray"
+          [attr.stroke-width]="workAreaService.revertByScale(1)"
+        />
+      </pattern>
+    </defs>
+    <rect
+      width="100%"
+      height="100%"
+      fill="url(#grid)"
+      *ngIf="isGrid"
+      [attr.x]="workAreaService.getViewBox().position.x"
+      [attr.y]="workAreaService.getViewBox().position.y"
+    />
+    <g id="engineering-layers"></g>
+    <g id="schema-layer" *ngIf="storageService.schema">
+      <g
+        *ngFor="let entity of storageService.schema.zones"
+        data-type="zones"
+        [attr.data-id]="entity.id"
+        class="editable-layer moveable rotatable"
+        [attr.transform]="generateTransformation(entity.geometry)"
+      >
+        <path
+          [attr.d]="utilitesService.polygonToPath(entity.geometry)"
+          fill-rule="evenodd"
+          [attr.fill]="entity.fill || '#800000'"
+          stroke="gray"
+          stroke-width="1"
+          vector-effect="non-scaling-stroke"
+        ></path>
+      </g>
+      <g
+        *ngFor="let entity of storageService.schema.stands"
+        data-type="stands"
+        [attr.data-id]="entity.id"
+        class="editable-layer moveable rotatable"
+        [attr.transform]="generateTransformation(entity.geometry)"
+      >
+        <path
+          [attr.d]="utilitesService.polygonToPath(entity.geometry)"
+          fill-rule="evenodd"
+          [attr.fill]="entity.fill || '#CCFFFF'"
+          stroke="gray"
+          stroke-width="1"
+          vector-effect="non-scaling-stroke"
+        ></path>
+      </g>
+      <g
+        *ngFor="let entity of storageService.schema.labels"
+        data-type="labels"
+        [attr.data-id]="entity.id"
+        class="moveable rotatable text-object"
+        [attr.transform]="generateTransformation(entity.geometry)"
+      >
+        <text
+          [attr.x]="entity.geometry.x + 'px'"
+          [attr.y]="entity.geometry.y + 'px'"
+          [attr.width]="entity.geometry.width + 'px'"
+          [attr.height]="entity.geometry.height + 'px'"
+          [attr.font-size]="entity.geometry.fontSize + 'px'"
+          [attr.font-family]="entity.geometry.fontFamily"
+        >
+          {{ entity.geometry.text }}
+        </text>
+      </g>
+    </g>
+  </svg>
+  <app-pavilion-panel></app-pavilion-panel>
+  <ng-container *ngIf="storageService.hallId">
+      <app-search-panel></app-search-panel>
+      <app-grid-panel></app-grid-panel>
+      <app-editor-panel></app-editor-panel>
+      <app-zoom-panel></app-zoom-panel>
+      <app-multi-select-panel></app-multi-select-panel>
+      <app-schema-type-panel></app-schema-type-panel>
+      <app-objects-panel></app-objects-panel>
+  </ng-container>
+</div>
