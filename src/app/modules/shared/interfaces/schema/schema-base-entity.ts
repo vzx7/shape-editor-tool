@@ -10,7 +10,7 @@ export interface SchemaBaseEntity {
   /**
    * Цвет фона объекта.
    */
-  fill?: string;
+  fill?: Colors;
   /**
    * Угол поворото объекта.
    */

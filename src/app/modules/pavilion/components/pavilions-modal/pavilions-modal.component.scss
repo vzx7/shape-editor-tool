@@ -3,17 +3,10 @@
 
 :host ::ng-deep .nsm-content {
   width: 360px;
+  max-height: calc(100vh - 200px);
+  overflow: auto;
 }
 
 :host::ng-deep .nsm-dialog {
   left: 0;
-}
-
-.draggable {
-  &--pavilion {
-    position: absolute;
-    top: 0;
-    right: 108%;
-    z-index: 2;
-  }
 }

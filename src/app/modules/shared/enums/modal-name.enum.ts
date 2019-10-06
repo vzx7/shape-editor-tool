@@ -8,19 +8,9 @@ export enum ModalName {
   StandList = 'stand-list',
 
   /**
-   * Модал зонирования
-   */
-  Zones = 'zones-modal',
-
-  /**
-   * Информация об участнике
-   */
-  ZonesInfo = 'zones-info-modal',
-
-  /**
    * Модал списка информации по стенду (из иснтрумента стенды).
    */
-  StandInfoList = 'stand-info-list',
+  StandInfo = 'stand-info-list',
 
   /**
    * Модал создания стенда.
@@ -49,10 +39,5 @@ export enum ModalName {
   /**
    * Модал слоев рабочей схемы
    */
-  Pavilions = 'pavilions-modal',
-
-  /**
-   * Модал добавления схемы
-   */
-  AddSchema = 'add-schema-modal'
+  Pavilions = 'pavilions-modal'
 }

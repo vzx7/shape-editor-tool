@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as d3 from 'd3';
+import { BaseType, Selection } from 'd3';
 import { UtilitesService } from 'modules/shared/services/utilites/utilites.service';
 import { PolygonEditable } from 'modules/editor/interfaces/polygon-editable';
 import { PathFragmentType } from 'modules/editor/enums/path-fragment-type.enum';
@@ -147,25 +147,25 @@ export class PainterHelperService extends PainterEntity {
     let pivotPointLayer: any;
 
     if (!isHole) {
-      pivotPointLayer = d3.select(`g#g-${uuid}`);
+      pivotPointLayer = this.d3.select(`g#g-${uuid}`);
 
       if (pivotPointLayer.empty()) {
-        pivotPointLayer = d3.select(`g.${EditorСSSClasses.PivotPointLayer}`).append('g')
+        pivotPointLayer = this.d3.select(`g.${EditorСSSClasses.PivotPointLayer}`).append('g')
           .attr('id', `g-${uuid}`)
           .attr('transform', transformation)
           .attr('data-type', PathFragmentType.Bound);
       }
 
-      const holeContainer = d3.select(`g#h-${uuid}`);
+      const holeContainer = this.d3.select(`g#h-${uuid}`);
 
       if (holeContainer.empty()) {
-        d3.select(`g.${EditorСSSClasses.PivotPointLayer}`).append('g')
+        this.d3.select(`g.${EditorСSSClasses.PivotPointLayer}`).append('g')
           .attr('id', `h-${uuid}`);
       } else if (isPivotContainerClean) {
         holeContainer.selectAll('g').remove();
       }
     } else {
-      pivotPointLayer = d3.select(`g#h-${uuid}`).append('g')
+      pivotPointLayer = this.d3.select(`g#h-${uuid}`).append('g')
         .attr('data-type', PathFragmentType.Hole)
         .attr('transform', transformation)
         .attr('data-id', uuid);
@@ -183,7 +183,7 @@ export class PainterHelperService extends PainterEntity {
    * @return вернет трансформацию.
    */
   public getTransformation(uuid: string): string {
-    const polygon = d3.select(`path#${uuid}`).node() as HTMLElement;
+    const polygon = this.d3.select(`path#${uuid}`).node() as HTMLElement;
     const obj = this.hostService.getObject(polygon.parentNode);
     if (obj) {
       return this.transformationService.generateTransformation(obj.geometry);
@@ -207,7 +207,7 @@ export class PainterHelperService extends PainterEntity {
     let polygonId: string;
 
     if (layerType === PathFragmentType.Hole) {
-      boundLayer = d3.select(`g#g-${layer.attr('data-id')}`);
+      boundLayer = this.d3.select(`g#g-${layer.attr('data-id')}`);
       polygonId = layer.attr('data-id');
     } else {
       boundLayer = layer;
@@ -216,8 +216,8 @@ export class PainterHelperService extends PainterEntity {
     }
 
     boundCoords = this.getCoordinates(boundLayer, isMain);
-    d3.select(`g#h-${polygonId}`).selectAll('g').nodes().forEach((item): void => {
-      const holeLayer = d3.select(item);
+    this.d3.select(`g#h-${polygonId}`).selectAll('g').nodes().forEach((item): void => {
+      const holeLayer = this.d3.select(item);
       holeCoords.push(this.getCoordinates(holeLayer, isMain));
     });
 
@@ -232,14 +232,14 @@ export class PainterHelperService extends PainterEntity {
    * @return Массив x,y.
    */
   public createNextIntermadietePoint(
-    circles: d3.BaseType[],
-    currentCircle: d3.Selection<d3.BaseType, {}, null, undefined>,
+    circles: BaseType[],
+    currentCircle: Selection<BaseType, {}, null, undefined>,
     index: number
   )
     : Vector {
-    let nextCircle = d3.select(circles[index + this.shiftByOne]);
+    let nextCircle = this.d3.select(circles[index + this.shiftByOne]);
     if (nextCircle.empty()) {
-      nextCircle = d3.select(circles[0]);
+      nextCircle = this.d3.select(circles[0]);
     }
 
     return this.generateIntermediatePoint(
@@ -277,11 +277,11 @@ export class PainterHelperService extends PainterEntity {
      * Метод для обработки начала перетаскивания узлов.
      */
     const handleDragStart = (): void => {
-      dragCircle = d3.select(d3.event.sourceEvent.target);
+      dragCircle = this.d3.select(this.d3.event.sourceEvent.target);
 
       if (dragCircle.classed(EditorСSSClasses.MainPoint)) {
         const index = Number(dragCircle.node().dataset.index);
-        const circles = d3.select(dragCircle.node().parentNode).selectAll('circle').nodes();
+        const circles = this.d3.select(dragCircle.node().parentNode).selectAll('circle').nodes();
         this.removeIntermediatePoints(circles, index);
       }
     };
@@ -292,7 +292,7 @@ export class PainterHelperService extends PainterEntity {
     const handleDrag = (): void => {
       if (this.drawing) { return; }
 
-      const layer = d3.select(dragCircle.node().parentNode);
+      const layer = this.d3.select(dragCircle.node().parentNode);
 
       this.dragging = true;
 
@@ -303,8 +303,8 @@ export class PainterHelperService extends PainterEntity {
       }
 
       dragCircle
-        .attr('cx', d3.event.x)
-        .attr('cy', d3.event.y)
+        .attr('cx', this.d3.event.x)
+        .attr('cy', this.d3.event.y)
         .attr('vector-effect', 'non-scaling-stroke');
 
       setPolygon(layer, false);
@@ -315,7 +315,7 @@ export class PainterHelperService extends PainterEntity {
      */
     const handleDragEnd = (): void => {
       this.dragging = false;
-      const layer = d3.select(dragCircle.node().parentNode);
+      const layer = this.d3.select(dragCircle.node().parentNode);
       const polygon = setPolygon(layer, true);
       this.updateSchemaPolygon(polygon);
     };
@@ -336,7 +336,7 @@ export class PainterHelperService extends PainterEntity {
       return polygon;
     };
 
-    const dragger = d3.drag()
+    const dragger = this.d3.drag()
       .on('drag', handleDrag)
       .on('start', handleDragStart)
       .on('end', handleDragEnd.bind(this));
@@ -379,7 +379,7 @@ export class PainterHelperService extends PainterEntity {
    * Диактивация интсрумента создания отверстий в полигонах.
    */
   public deactivateCreatorHole(): void {
-    d3.select(`path#${this.uuidPolygonForHoleCreator}`)
+    this.d3.select(`path#${this.uuidPolygonForHoleCreator}`)
       .style('fill', Colors.RedLight)
       .classed(EditorСSSClasses.CreateHoleActive, false);
     this.isActiveHoleCreator = false;
@@ -402,11 +402,10 @@ export class PainterHelperService extends PainterEntity {
       }
     };
 
-    d3.select(`path#${polygonId}`)
+    this.d3.select(`path#${polygonId}`)
       .attr('d', this.utilitesService.polygonToPath(polygon.geometry))
       .style('fill', Colors.RedLight)
       .attr('fill-rule', 'evenodd')
-      .attr('vector-effect', 'non-scaling-stroke')
       .on('contextmenu', contextMenu(this.menuForPolygon));
 
     return polygon;
@@ -417,7 +416,7 @@ export class PainterHelperService extends PainterEntity {
    * @param id Id полигона.
    */
   public editingFinish(): void {
-    d3.select(`.${EditorСSSClasses.OneEditableLayer}`).classed(EditorСSSClasses.OneEditableLayer, false);
+    this.d3.select(`.${EditorСSSClasses.OneEditableLayer}`).classed(EditorСSSClasses.OneEditableLayer, false);
   }
 
   /**
@@ -441,7 +440,7 @@ export class PainterHelperService extends PainterEntity {
    * @param radius Радиус.
    */
   private changeScaleforCircle(className: EditorСSSClasses, radius: number): void {
-    d3.selectAll(`.${className}`).attr('r', this.workAreaService.revertByScale(radius));
+    this.d3.selectAll(`.${className}`).attr('r', this.workAreaService.revertByScale(radius));
   }
 
   /**
@@ -468,11 +467,11 @@ export class PainterHelperService extends PainterEntity {
    */
   private getCoordinatesForIntermediatePoints(layer: any, coordinates: Vector[]): void {
     const circles = layer.selectAll('circle').nodes();
-    circles.forEach((item: d3.BaseType, index: number) => {
-      const circle = d3.select(item);
+    circles.forEach((item: BaseType, index: number) => {
+      const circle = this.d3.select(item);
       coordinates.push({ x: Number(circle.attr('cx')), y: Number(circle.attr('cy')) });
       if (circle.classed(this.classForIntermadiatePointDragged)) {
-        const prevCircle = d3.select(circles[index - this.shiftByOne]);
+        const prevCircle = this.d3.select(circles[index - this.shiftByOne]);
         const prevPoint =
           this.generateIntermediatePoint(
             { x: Number(prevCircle.attr('cx')), y: Number(prevCircle.attr('cy')) },
@@ -493,8 +492,8 @@ export class PainterHelperService extends PainterEntity {
    */
   private getCoordinatesForMainPoints(layer: any, coordinates: Vector[]): void {
     const circles = layer.selectAll(`circle.${EditorСSSClasses.MainPoint}`).nodes();
-    circles.forEach((item: d3.BaseType, index: number) => {
-      const circle = d3.select(item);
+    circles.forEach((item: BaseType, index: number) => {
+      const circle = this.d3.select(item);
       coordinates.push({ x: Number(circle.attr('cx')), y: Number(circle.attr('cy')) });
       coordinates.push(this.createNextIntermadietePoint(circles, circle, index));
     });
@@ -509,7 +508,7 @@ export class PainterHelperService extends PainterEntity {
     const intermadiatePoint = circles.find((d: HTMLElement) => {
       return Number(d.dataset.index) === poitnIndex;
     });
-    d3.select(intermadiatePoint).remove();
+    this.d3.select(intermadiatePoint).remove();
   }
 
   /**
@@ -520,12 +519,12 @@ export class PainterHelperService extends PainterEntity {
     let uuid: string;
     if (layer.attr('data-type') === PathFragmentType.Hole) {
       uuid = layer.attr('data-id').replace(/^h-/, '');
-      layer = d3.select(`g#g-${uuid}`);
+      layer = this.d3.select(`g#g-${uuid}`);
     } else {
       uuid = layer.attr('id').replace(/^g-/, '');
     }
     this.renderLayer(layer.node(), uuid, false);
-    d3.select(`g#h-${uuid}`).selectAll('g').nodes()
+    this.d3.select(`g#h-${uuid}`).selectAll('g').nodes()
       .forEach((item) => {
         this.renderLayer(item, uuid, true);
       });
@@ -538,11 +537,11 @@ export class PainterHelperService extends PainterEntity {
    * @param isHole Если отрисовывается слой внутреннего контура.
    */
   private renderLayer(node: any, uuid: string, isHole: boolean): void {
-    const layer = d3.select(node);
+    const layer = this.d3.select(node);
     const coordinates: Vector[] = [];
     const nodes = layer.selectAll(`circle.${EditorСSSClasses.MainPoint}`).nodes();
     nodes.forEach((item, index) => {
-      const circle = d3.select(item);
+      const circle = this.d3.select(item);
       coordinates.push({ x: Number(circle.attr('cx')), y: Number(circle.attr('cy')) });
       coordinates.push(this.createNextIntermadietePoint(nodes, circle, index));
     });

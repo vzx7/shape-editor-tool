@@ -2,8 +2,6 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Vector } from 'modules/shared/interfaces/geometry/vector';
 import { ViewBox } from 'modules/shared/interfaces/geometry/view-box';
 import { D3Base } from 'modules/shared/classes/d3Base';
-import { UtilitesService } from '../utilites/utilites.service';
-import { StorageService } from '../storage/storage.service';
 
 /**
  * Сервис для управления рабочей областью.
@@ -37,10 +35,7 @@ export class WorkAreaService extends D3Base {
 
   private readonly halfK: number = 2;
 
-  constructor(
-    private readonly utilitesService: UtilitesService,
-    private readonly storageService: StorageService
-  ) {
+  constructor() {
     super();
     const startScale = 1;
     const startWidth = 100;
@@ -51,9 +46,6 @@ export class WorkAreaService extends D3Base {
     this.height = startHeight;
     this.viewBox = { position: { x: 0, y: 0 }, width: this.width, height: this.height };
     this.changeScale = new EventEmitter<boolean>();
-    this.storageService.schemaLoaded.subscribe(() => {
-      this.scaleToScheme();
-    });
   }
 
   /**
@@ -115,7 +107,7 @@ export class WorkAreaService extends D3Base {
    * @param v2 другая вершина диагонали.
    */
   public setViewBoxBounds(v1: Vector, v2: Vector): void {
-    const bBox = this.utilitesService.createBBox(v1, v2);
+    const bBox = this.createBBox(v1, v2);
     this.setViewBox(bBox);
   }
 
@@ -214,5 +206,22 @@ export class WorkAreaService extends D3Base {
     const centerY = viewBox.position.y + viewBox.height / this.halfK;
 
     return { x: centerX, y: centerY};
+  }
+
+  /**
+   * Построение области по двум вершинам.
+   * @param v1 одна из вершин.
+   * @param v2 другая вершина.
+   * @return область.
+   */
+  private createBBox(v1: Vector, v2: Vector): ViewBox {
+    return {
+      height: Math.abs(v1.y - v2.y),
+      width: Math.abs(v1.x - v2.x),
+      position: {
+        x: Math.min(v1.x, v2.x),
+        y: Math.min(v1.y, v2.y)
+      }
+    };
   }
 }

@@ -1,4 +1,5 @@
 import * as d3lib from 'd3';
+import { OnInit } from '@angular/core';
 
 /**
  * Базовый класс для работы с D3.

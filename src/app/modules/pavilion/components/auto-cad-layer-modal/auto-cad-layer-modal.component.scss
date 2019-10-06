@@ -15,10 +15,8 @@
   right: 0;
 }
 
-.draggable {
-  &--autocad-layer {
-    position: absolute;
-    top: 0;
-    right: 43%;
+.simple {
+  ::ng-deep svg > * {
+    fill: $not-active-color;
   }
 }

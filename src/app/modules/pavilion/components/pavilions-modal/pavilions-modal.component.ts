@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { BaseModalComponent } from 'modules/shared/components/base-modal/base-modal.component';
 import { PavilionService } from 'modules/pavilion/services/pavilion.service';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { StorageService } from 'modules/shared/services/storage/storage.service';
 import { ModalName } from 'modules/shared/enums/modal-name.enum';
 import { Hall } from 'modules/shared/interfaces/schema/hall';
 
@@ -19,34 +20,29 @@ export class PavilionsModalComponent extends BaseModalComponent {
    * Лэйбл на кнопке выбора павилиона.
    */
   @Input() public label: { name: string };
-
-  /**
-   * Id выбранного хола.
-   */
-  public selectedHallId: string;
-
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
-    private readonly pavilionService: PavilionService
+    private readonly pavilionService: PavilionService,
+    private readonly storageService: StorageService
   ) {
     super(ngxSmartModalService);
-  }
-
-  /**
-   * Открытие модала
-   */
-  public open(): void {
-    this.pavilionService.getHalls().subscribe((halls: Hall[]) => {
-      this.halls = halls;
-      this.openModal(ModalName.Pavilions);
+    this.pavilionService.selectOpened.subscribe((isActive: boolean) => {
+      this.open(isActive);
     });
+
+    this.halls = this.storageService.schema.halls;
   }
 
   /**
-   * Закрытие модала
+   * Открытие и закрытие модала
+   * @param isActive Открыт ли он
    */
-  public close(): void {
-    this.closeModal(ModalName.Pavilions);
+  public open(isActive: boolean): void {
+    if (isActive === true) {
+      this.openModal(ModalName.Pavilions);
+    } else {
+      this.closeModal(ModalName.Pavilions);
+    }
   }
 
   /**
@@ -56,13 +52,8 @@ export class PavilionsModalComponent extends BaseModalComponent {
     this.actionEmit(ModalName.Pavilions, false);
   }
 
-  /**
-   * Выбор хола.
-   * @param hall hall
-   */
   public onSelectHall(hall: Hall): void {
     this.label.name = `${hall.pavilion}`;
     this.pavilionService.selectHall(hall);
-    this.selectedHallId = hall.id;
   }
 }

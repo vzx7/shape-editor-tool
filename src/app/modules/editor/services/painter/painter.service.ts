@@ -4,7 +4,6 @@ import { StorageService } from 'modules/shared/services/storage/storage.service'
 import { Zone } from 'modules/shared/interfaces/schema/zone';
 import { Stand } from 'modules/shared/interfaces/schema/stand';
 import * as genUuid from 'shortid';
-import * as d3 from 'd3';
 import * as contextMenu from 'd3-context-menu';
 import { PainterHelperService } from '../painter-helper/painter-helper.service';
 import { PainterEntity } from 'modules/editor/classes/painter-entity';
@@ -70,7 +69,7 @@ export class PainterService extends PainterEntity {
       .classed(EditorСSSClasses.PivotPointLayer, true);
 
     if (this.objectId && this.editorMode === EditorMode.Update) {
-      d3.select(`[data-id="${this.objectId}"]`).classed(EditorСSSClasses.OneEditableLayer, true);
+      this.d3.select(`[data-id="${this.objectId}"]`).classed(EditorСSSClasses.OneEditableLayer, true);
       this.editableLayerClassName = EditorСSSClasses.OneEditableLayer;
     } else if (this.editorMode === EditorMode.Update) {
       this.editableLayerClassName = EditorСSSClasses.EditableLayer;
@@ -95,11 +94,11 @@ export class PainterService extends PainterEntity {
    * Отключение инструмента рисования полигона.
    */
   public drawPolygonStop(): void {
-    const existLayers = d3.selectAll(`g.${this.editableLayerClassName}`).nodes();
+    const existLayers = this.d3.selectAll(`g.${this.editableLayerClassName}`).nodes();
 
     existLayers.forEach(
       (item): void => {
-        const layer = d3.select(item);
+        const layer = this.d3.select(item);
         const object: Stand | Zone =
           this.storageService.getObject(layer.attr('data-type') as ObjectType, layer.attr('data-id'));
         const polygon = layer.select('path');
@@ -111,7 +110,7 @@ export class PainterService extends PainterEntity {
       }
     );
 
-    d3.select(`g.${EditorСSSClasses.PivotPointLayer}`).remove();
+    this.d3.select(`g.${EditorСSSClasses.PivotPointLayer}`).remove();
     this.killEventHandlers(['mouseup', 'mousemove']);
   }
 
@@ -119,7 +118,7 @@ export class PainterService extends PainterEntity {
    * Завершаем создание полигона.
    */
   public endCreatePolygon(): void {
-    d3.selectAll(`.${EditorСSSClasses.NewPolygon}`)
+    this.d3.selectAll(`.${EditorСSSClasses.NewPolygon}`)
       .style('fill', null).classed(EditorСSSClasses.NewPolygon, false);
     this.isCreateFinish = false;
 
@@ -133,7 +132,7 @@ export class PainterService extends PainterEntity {
     this.svg.selectAll(`g.${this.editableLayerClassName}`).nodes().forEach((item): void => {
       const uuid = genUuid.generate();
 
-      this.groupLayer = d3.select(item);
+      this.groupLayer = this.d3.select(item);
       this.groupLayer.select('path')
         .attr('id', uuid)
         .on('contextmenu', contextMenu(this.helper.menuForPolygon));
@@ -208,13 +207,13 @@ export class PainterService extends PainterEntity {
     if (target.localName === 'path') {
       isHole = target.classList.contains(EditorСSSClasses.CreateHoleActive);
     } else if (target.localName === 'circle' && target.dataset.id) {
-      const path = d3.select(`path#${target.dataset.id}`);
+      const path = this.d3.select(`path#${target.dataset.id}`);
       isHole = (<SVGGraphicsElement>path.node()).classList.contains(EditorСSSClasses.CreateHoleActive);
     }
 
     return this.dragging
       || (this.editorMode === EditorMode.Update && target.localName === 'svg')
-      || d3.event.button !== 0
+      || this.d3.event.button !== 0
       || (
         this.isCreateFinish
         && !isHole
@@ -227,7 +226,7 @@ export class PainterService extends PainterEntity {
   private mouseUpHandler(): void {
     this.getSvg();
 
-    if (this.isMouseUpHandlerDisable(d3.event.target)) {
+    if (this.isMouseUpHandlerDisable(this.d3.event.target)) {
       return;
     }
 
@@ -244,7 +243,7 @@ export class PainterService extends PainterEntity {
         .attr('transform', this.getTransformForLayer());
     }
 
-    if (d3.event.target.hasAttribute('is-handle')) {
+    if (this.d3.event.target.hasAttribute('is-handle')) {
       this.closePolygon.call(this);
 
       return;
@@ -273,9 +272,7 @@ export class PainterService extends PainterEntity {
     this.groupLayer.append('polyline')
       .attr('points', this.editablePolygonPoints.map((v) => [v.x, v.y]))
       .style('fill', 'none')
-      .attr('vector-effect', 'non-scaling-stroke')
       .attr('stroke', Colors.Black);
-
     this.editablePolygonPoints.forEach((item, index) => {
       if (index % this.delimiter !== 0) {
         this.groupLayer.append('circle')
@@ -283,7 +280,6 @@ export class PainterService extends PainterEntity {
           .attr('cy', item.y)
           .attr('r', this.workAreaService.revertByScale(this.intermediatePointRadius))
           .attr('is-handle', 'true')
-          .attr('vector-effect', 'non-scaling-stroke')
           .style('cursor', 'pointer');
       } else {
         this.groupLayer.append('circle')
@@ -292,7 +288,6 @@ export class PainterService extends PainterEntity {
           .attr('r', this.workAreaService.revertByScale(this.radiusPoint))
           .attr('fill', this.isPolygonOnAddHoleInFocus() ? Colors.Green : Colors.Red)
           .attr('is-handle', 'true')
-          .attr('vector-effect', 'non-scaling-stroke')
           .attr('data-id', this.helper.uuidPolygonForHoleCreator)
           .style('cursor', 'pointer');
       }
@@ -304,7 +299,7 @@ export class PainterService extends PainterEntity {
    * @return transform
    */
   private getTransformForLayer(): string {
-    const layer = d3.select(`g#g-${this.helper.uuidPolygonForHoleCreator}`);
+    const layer = this.d3.select(`g#g-${this.helper.uuidPolygonForHoleCreator}`);
     if (!layer.empty()) {
       return layer.attr('transform');
     }
@@ -319,7 +314,7 @@ export class PainterService extends PainterEntity {
   private mouseMoveHandler(): void {
     if (!this.drawing) { return; }
 
-    const group = d3.select(`g.${EditorСSSClasses.DrawPolygon}`);
+    const group = this.d3.select(`g.${EditorСSSClasses.DrawPolygon}`);
     const step = 2;
 
     this.setTargetCorditnate();
@@ -332,10 +327,9 @@ export class PainterService extends PainterEntity {
       .append('line')
       .attr('x1', this.drawStartPoint.x)
       .attr('y1', this.drawStartPoint.y)
-      .attr('x2', this.dragVector.x + this.workAreaService.revertByScale(step))
-      .attr('y2', this.dragVector.y + this.workAreaService.revertByScale(step))
+      .attr('x2', this.dragVector.x + step)
+      .attr('y2', this.dragVector.y + step)
       .attr('data-id', this.helper.uuidPolygonForHoleCreator)
-      .attr('vector-effect', 'non-scaling-stroke')
       .attr('stroke', this.isPolygonOnAddHoleInFocus() ? Colors.Green : Colors.Red)
       .attr('stroke-width', 1);
   }
@@ -344,11 +338,11 @@ export class PainterService extends PainterEntity {
    * Настройка координат для целевого элемента.
    */
   private setTargetCorditnate(): void {
-    const target = d3.event.target;
+    const target = this.d3.event.target;
     const targetParent = target.parentElement;
     this.dragVector = {
-      x: d3.mouse(target)[0],
-      y: d3.mouse(target)[1]
+      x: this.d3.mouse(target)[0],
+      y: this.d3.mouse(target)[1]
     };
     if (targetParent.getAttribute('transform')) {
       this.dragVector = this.svgNativeHelperService.getPointTransformation(target, this.dragVector);
@@ -363,10 +357,10 @@ export class PainterService extends PainterEntity {
   private getGeometry(layer: any): PolygonEditable {
     const polygon = layer.select('path');
     const polygonId = polygon.attr('id');
-    const boundCoords: Vector[] = this.handleSave(d3.select(`g#g-${polygonId}`));
+    const boundCoords: Vector[] = this.handleSave(this.d3.select(`g#g-${polygonId}`));
     const holeCoords: Vector[][] = [];
-    d3.select(`g#h-${polygonId}`).selectAll('g').nodes().forEach((item): void => {
-      holeCoords.push(this.handleSave(d3.select(item)));
+    this.d3.select(`g#h-${polygonId}`).selectAll('g').nodes().forEach((item): void => {
+      holeCoords.push(this.handleSave(this.d3.select(item)));
     });
 
     return {
@@ -388,8 +382,8 @@ export class PainterService extends PainterEntity {
     layer.selectAll('circle').nodes().forEach(
       (item: SVGGraphicsElement, index: number): void => {
         if (index % this.delimiter === 0) {
-          const circle = d3.select(item);
-          coordinates.push({ x: Number(circle.attr('cx')), y: Number(circle.attr('cy')) });
+          const circle = this.d3.select(item);
+          coordinates.push( { x: Number(circle.attr('cx')), y: Number(circle.attr('cy')) });
         }
       });
 
@@ -402,7 +396,7 @@ export class PainterService extends PainterEntity {
    * @return  boolean
    */
   private isPolygonOnAddHoleInFocus(): boolean {
-    return (d3.event.target.id || d3.event.target.dataset.id) === this.helper.uuidPolygonForHoleCreator
+    return (this.d3.event.target.id || this.d3.event.target.dataset.id) === this.helper.uuidPolygonForHoleCreator
       && this.helper.isActiveHoleCreator;
   }
 
@@ -434,16 +428,16 @@ export class PainterService extends PainterEntity {
   private closeHole(): void {
     const bound: Vector[] = [];
     const holes: Vector[][] = [];
-    const circles = d3.select(`g#g-${this.helper.uuidPolygonForHoleCreator}`)
+    const circles = this.d3.select(`g#g-${this.helper.uuidPolygonForHoleCreator}`)
       .selectAll('circle').nodes();
     circles.forEach((item: any, index: number): void => {
-      const circle = d3.select(item);
+      const circle = this.d3.select(item);
       bound.push({ x: Number(circle.attr('cx')), y: Number(circle.attr('cy')) });
     });
-    d3.select(`g#h-${this.helper.uuidPolygonForHoleCreator}`).selectAll('g').nodes().forEach((item): void => {
+    this.d3.select(`g#h-${this.helper.uuidPolygonForHoleCreator}`).selectAll('g').nodes().forEach((item): void => {
       const coordinates: Vector[] = [];
-      d3.select(item).selectAll('circle').nodes().forEach((crcl, index): void => {
-        const circle = d3.select(crcl);
+      this.d3.select(item).selectAll('circle').nodes().forEach((crcl, index): void => {
+        const circle = this.d3.select(crcl);
         coordinates.push({ x: Number(circle.attr('cx')), y: Number(circle.attr('cy')) });
       });
       holes.push(coordinates);
@@ -469,10 +463,10 @@ export class PainterService extends PainterEntity {
       .attr('data-type', this.objectType)
       .attr('data-id', `g-${uuid}`);
     this.groupLayer.append('path')
-      .attr('d', this.lineFunction(this.editablePolygonPoints.map((v) => [v.x, v.y])))
+      .attr('d', this.lineFunction(this.editablePolygonPoints.map((v) => [ v.x, v.y ])))
       .attr('id', uuid);
     this.helper.generateCircles(this.editablePolygonPoints, uuid, false);
-    this.storageService.addObject(this.objectType, this.getGeometry(d3.select(`g.${EditorСSSClasses.TmpLayer}`)));
+    this.storageService.addObject(this.objectType, this.getGeometry(this.d3.select(`g.${EditorСSSClasses.TmpLayer}`)));
     this.svg.select(`g.${EditorСSSClasses.TmpLayer}`).remove();
     setTimeout(() => this.setNewPolygon(uuid));
     this.helper.objectId = uuid;
@@ -483,9 +477,9 @@ export class PainterService extends PainterEntity {
    * @param uuid id полигона.
    */
   private setNewPolygon(uuid: string): void {
-    const nodes = d3.selectAll(`g.${EditorСSSClasses.EditableLayer}`).nodes();
+    const nodes = this.d3.selectAll(`g.${EditorСSSClasses.EditableLayer}`).nodes();
     const layer = nodes[nodes.length - 1];
-    const selectedLayer = d3.select(layer);
+    const selectedLayer = this.d3.select(layer);
     selectedLayer.classed(this.editableLayerClassName, true);
     selectedLayer.select('path')
       .classed(EditorСSSClasses.PolygonEditArea, true)

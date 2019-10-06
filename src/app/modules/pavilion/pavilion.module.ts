@@ -9,13 +9,6 @@ import { AutoCadLayerModalComponent } from './components/auto-cad-layer-modal/au
 import { PavilionsModalComponent } from './components/pavilions-modal/pavilions-modal.component';
 import { SharedModule } from 'modules/shared/shared.module';
 import { PavilionService } from './services/pavilion.service';
-import {
-  PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule
-} from 'ngx-perfect-scrollbar';
-
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
-};
 
 /**
  * Модуль для взаимодействия с объектами блока “Павильон/Зал”
@@ -31,7 +24,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   imports: [
     CommonModule,
-    PerfectScrollbarModule,
     SharedModule,
     InlineSVGModule
   ],
@@ -39,10 +31,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PavilionPanelComponent
   ],
   providers: [
-    {
-      provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    },
     PavilionService
   ]
 })

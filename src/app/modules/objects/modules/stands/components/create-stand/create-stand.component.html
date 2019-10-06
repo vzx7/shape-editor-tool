@@ -1,36 +1,21 @@
-<div ngDraggable class="draggable draggable--create-stand">
-  <ngx-smart-modal
-    #modal
-    [identifier]="modalName.CreateStand"
-    target="body"
-    (onClose)="onClose()"
-  >
-    <form [formGroup]="form" (ngSubmit)="onSave()">
-      <div class="dialog-content">
+<ngx-smart-modal #modal [identifier]="modalName.CreateStand" target="body" (onClose)="onClose()">
+  <form [formGroup]="form" (ngSubmit)="onSave()">
+    <div class="dialog-content">
         <div class="form__group form__group--column ">
           <label class="form__label">Номер Стенда:</label>
           <input class="form__control" type="text" formControlName="number" />
         </div>
         <div class="form__group form__group--column ">
           <label class="form__label">Площадь:</label>
-          <input class="form__control" type="text" formControlName="square" />
+          <input class="form__control" type="text" formControlName="square"/>
         </div>
         <div class="form__footer form__footer--space-between">
-          <button
-            (click)="addStandGeometry($event)"
-            class="button button--main button--bordered button--rounded-border-5"
-          >
-            Добавить геометрию
-          </button>
-          <button
-            [disabled]="!isAddGeometryStart"
-            type="submit"
-            class="button button--main button--bordered button--rounded-border-5"
-          >
-            Создать
-          </button>
+            <button (click)="addStandGeometry($event)" class="button button--main button--bordered button--rounded-border-5"
+            >Добавить геометрию</button>
+          <button [disabled]="!isAddGeometryStart" type="submit" class="button button--main button--bordered button--rounded-border-5"
+          >Создать</button>
         </div>
-      </div>
-    </form>
-  </ngx-smart-modal>
-</div>
+    </div>
+  </form>
+
+</ngx-smart-modal>

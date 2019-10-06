@@ -45,18 +45,6 @@ export class ToolActivateService {
           ToolNames.ZoomingTool
         ]
       },
-      {
-        groupName: GroupToolNames.LayersGroup,
-        toolNames: [
-          ToolNames.LayersTool
-        ]
-      },
-      {
-        groupName: GroupToolNames.StandsGroup,
-        toolNames: [
-          ToolNames.StandsTool
-        ]
-      },
     ];
 
     this.activeMode = new EventEmitter<ToolState>();
@@ -102,12 +90,6 @@ export class ToolActivateService {
       case ToolNames.MovementTool:
         this.doDeactivateEmit(GroupToolNames.MultiSelectGroup);
         this.doDeactivateEmit(GroupToolNames.EditorGroup, [ToolNames.MovementTool]);
-        break;
-
-      case ToolNames.LayersTool:
-        this.doDeactivateEmit(GroupToolNames.StandsGroup);
-        this.doDeactivateEmit(GroupToolNames.EditorGroup);
-        this.doDeactivateEmit(GroupToolNames.MultiSelectGroup);
         break;
     }
   }

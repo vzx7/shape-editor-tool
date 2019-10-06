@@ -1,0 +1,47 @@
+<ngx-smart-modal
+  class=""
+  #standInfo
+  [identifier]="modalId"
+  target="body"
+  (onClose)="onCloseStandInfo()"
+>
+  <div *ngIf="choosenStand" class="card card--no-border">
+    <div class="status status--chosen">
+      <button
+        class="button button--main button--bordered button--rounded-border-5"
+        (click)="getBack()"
+      >
+        &larr; Вернуться к списку
+      </button>
+      <div class="card__header">Статус</div>
+      <div class="card__text-22">{{ choosenStand.status }}</div>
+    </div>
+    <div class="dialog-content">
+      <div class="info">
+        <div class="info__item">
+          <div class="card__header">Id Стенда</div>
+          <div class="card__text-24">{{ choosenStand.id }}</div>
+        </div>
+        <div class="info__item">
+          <div class="card__header">Площадь</div>
+          <div class="card__text-24">
+            {{ choosenStand.square }} М<sup><small>2</small></sup>
+          </div>
+        </div>
+      </div>
+      <div class="status">
+        <div class="card__header">Менеджер</div>
+        <div class="card__text-22">{{ choosenStand.manager || "" }}</div>
+      </div>
+      <div class="card__footer">
+        <button
+          [disabled]="isEditActive"
+          (click)="editStand(choosenStand.id)"
+          class="button button--main button--rounded-border-5 button--bordered"
+        >
+          Поменять расположение
+        </button>
+      </div>
+    </div>
+  </div>
+</ngx-smart-modal>

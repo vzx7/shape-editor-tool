@@ -1,4 +1,4 @@
-import { Toggler } from './toggler';
+import { LayersToggler } from './layers-toggler';
 
 /**
  * Слои AutoCAD
@@ -8,38 +8,38 @@ export interface AutoCADLayer {
 /**
  * Схема зала (стены, ограничения высоты, входы, люки, навеска, разрез).
  */
-  hallScheme: Toggler;
+  hallScheme: LayersToggler;
  /**
   * Классы площади
   */
-  squareClass: Toggler;
+  squareClass: LayersToggler;
  /**
   * Текстовая информация о зале
   */
-  textInfo: Toggler;
+  textInfo: LayersToggler;
  /**
   * Площадь 1-го этажа
   */
-  squareFirst: Toggler;
+  squareFirst: LayersToggler;
   /**
    * Площадь 2-го этажа
    */
-  squareSecond: Toggler;
+  squareSecond: LayersToggler;
   /**
    * Высота потолка
    */
-  ceilingHeight: Toggler;
+  ceilingHeight: LayersToggler;
   /**
    * Контуры площадей
    */
-  outline: Toggler; // TODO разобраться, что за контуры и вероятно переименовать
+  outline: LayersToggler; // TODO разобраться, что за контуры и вероятно переименовать
   /**
    * Базовые планировки
    */
-  baseLayout: Toggler;
+  baseLayout: LayersToggler;
   /**
    * Текущая инженерная планировка стендов
    */
-  currentLayout: Toggler;
+  currentLayout: LayersToggler;
 
 }

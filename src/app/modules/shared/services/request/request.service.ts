@@ -28,14 +28,17 @@ export class RequestService {
    * @param headers Поля заголовков.
    * @return Вернет Observable объекта ответа.
    */
-  public post<T>(url: string, complete?: Function, body?: Object, headers?: HttpHeaders): Observable<T> {
-
-    return this.httpClient.post<T>(this.getHost() + url, body, { headers: headers || this.header })
-      .pipe(
-        finalize(() => {
-         complete();
-        })
-      );
+  public post<T>(
+    url: string,
+    complete?: Function,
+    body?: Object,
+    headers?: Object,
+  ): Observable<T> {
+    return this.httpClient
+      .post<T>(this.getHost() + url, body, {
+        headers: headers || this.header,
+      })
+      .pipe(finalize(complete && complete()));
   }
 
   /**

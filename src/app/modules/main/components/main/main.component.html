@@ -5,7 +5,6 @@
     [attr.height]="workAreaService.getHeight()"
     [attr.viewBox]="workAreaService.generateViewBox()"
     viewport-fill="url(#grid)"
-    [ngClass]="{'hidden': !isShowSchema}"
   >
     <defs>
       <pattern
@@ -31,9 +30,9 @@
       [attr.y]="workAreaService.getViewBox().position.y"
     />
     <g id="engineering-layers"></g>
-    <g id="schema-layer" *ngIf="storageService.schema">
+    <g id="schema-layer">
       <g
-        *ngFor="let entity of storageService.schema.zones"
+        *ngFor="let entity of storageService.zones"
         data-type="zones"
         [attr.data-id]="entity.id"
         class="editable-layer moveable rotatable"
@@ -49,7 +48,7 @@
         ></path>
       </g>
       <g
-        *ngFor="let entity of storageService.schema.stands"
+        *ngFor="let entity of storageService.stands"
         data-type="stands"
         [attr.data-id]="entity.id"
         class="editable-layer moveable rotatable"
@@ -65,7 +64,7 @@
         ></path>
       </g>
       <g
-        *ngFor="let entity of storageService.schema.labels"
+        *ngFor="let entity of storageService.labels"
         data-type="labels"
         [attr.data-id]="entity.id"
         class="moveable rotatable text-object"

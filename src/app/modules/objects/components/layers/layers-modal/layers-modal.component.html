@@ -1,0 +1,77 @@
+<ngx-smart-modal #modal [identifier]="modalName.Layers" target="app-layers">
+  <div class="dialog-content">
+    <div class="card">
+      <h2 class="card__header">Управление слоями рабочей схемы</h2>
+      <div class="card__item card__item--border-top">
+          <div class="card__header">Мастер-план</div>
+          <div class="card__item card__item--space-between">
+            <div class="card__text-15">Выставлен счет на оплату</div>
+            <button
+            class="button billing button-toggler"
+            [cacheSVG]="false"
+            [inlineSVG]="workingSchemeLayers? workingSchemeLayers.masterPlan.isBilling.iconPath : iconPath"
+            (click)="switch('masterPlan', 'isBilling')" >
+          </button>
+          </div>
+          <div class="card__item card__item--space-between">
+            <div class="card__text-15">Согласование и подписание договора</div>
+            <button
+            class="button negotiation button-toggler"
+            [cacheSVG]="false"
+            [inlineSVG]="workingSchemeLayers? workingSchemeLayers.masterPlan.isNegotiation.iconPath : iconPath"
+            (click)="switch('masterPlan', 'isNegotiation')" >
+          </button>
+          </div>
+          <div class="card__item card__item--space-between">
+            <div class="card__text-15">Свободные стенды</div>
+            <button
+            class="button simple button-toggler"
+            [cacheSVG]="false"
+            [inlineSVG]="workingSchemeLayers? workingSchemeLayers.masterPlan.isFree.iconPath : iconPath"
+            (click)="switch('masterPlan', 'isFree')" >
+          </button>
+        </div>
+      </div>
+      <div *ngIf="!workingSchemeLayers.masterPlanOnly">
+        <div class="card__item card__item--border-top">
+          <div class="card__header">Тепловая карта</div>
+          <div class="card__item card__item--space-between">
+            <div class="card__text-15">Выслано на согласование</div>
+            <button
+            class="button sent button-toggler"
+            [cacheSVG]="false"
+            [inlineSVG]="workingSchemeLayers? workingSchemeLayers.hotMap.isSent.iconPath : iconPath"
+            (click)="switch('hotMap', 'isSent')" >
+          </button>
+          </div>
+          <div class="card__item card__item--space-between">
+            <div class="card__text-15">Резерв - Стадия КП</div>
+            <button
+            class="button reserve button-toggler"
+            [cacheSVG]="false"
+            [inlineSVG]="workingSchemeLayers? workingSchemeLayers.hotMap.isReserve.iconPath : iconPath"
+            (click)="switch('hotMap', 'isReserve')" >
+          </button>
+          </div>
+        </div>
+        <div class="card__item card__item--border-top">
+          <div class="card__header">Дополнительно</div>
+          <div class="card__item card__item--space-between">
+            <div class="icard__text-15">Зонирование</div>
+            <button
+            class="button simple button-toggler"
+            [cacheSVG]="false"
+            [inlineSVG]="workingSchemeLayers? workingSchemeLayers.additional.isZoning.iconPath : iconPath"
+            (click)="switch('additional', 'isZoning')" >
+          </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dialog-content__footer">
+      <button class="button button--main button--bordered button--border-"
+      (click)="toggleInfo()">
+      {{buttonText}}</button>
+    </div>
+  </div>
+</ngx-smart-modal>

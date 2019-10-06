@@ -24,13 +24,28 @@ export class AutoCadLayerModalComponent extends BaseModalComponent implements On
   constructor(
     public autocadLayersService: AutocadLayersService,
     public ngxSmartModalService: NgxSmartModalService
-  ) {
+    ) {
     super(ngxSmartModalService);
     this.iconPath = 'assets/images/icons/switch-off.svg';
+    this.autocadLayersService.isLayersActive.subscribe((value: boolean) => {
+      this.open(value);
+    });
     this.initLayers();
-  }
+   }
 
   public ngOnInit(): void {
+  }
+
+  /**
+   * Открытие и закрытие модала
+   * @param value Открыт ли он
+   */
+  public open(value: boolean): void {
+    if (value === true) {
+      this.openModal(ModalName.AutoCADLayers);
+    } else {
+      this.closeModal(ModalName.AutoCADLayers);
+    }
   }
 
   /**
@@ -41,23 +56,9 @@ export class AutoCadLayerModalComponent extends BaseModalComponent implements On
     if (!this.layers[layer] || this.layers[layer].value === false) {
       this.layers[layer].iconPath = 'assets/images/icons/switch-on-initial.svg';
     } else {
-      this.layers[layer].iconPath = 'assets/images/icons/switch-off.svg';
+      this.layers[layer].iconPath  = 'assets/images/icons/switch-off.svg';
     }
-    this.layers[layer].value = !this.layers[layer].value;
-  }
-
-  /**
-   * Открытие модала
-   */
-  public open(): void {
-    this.openModal(ModalName.AutoCADLayers);
-  }
-
-  /**
-   * Закрытие модала
-   */
-  public close(): void {
-    this.closeModal(ModalName.AutoCADLayers);
+    this.layers[layer].value = !this.layers[layer].value ;
   }
 
   /**
@@ -102,12 +103,5 @@ export class AutoCadLayerModalComponent extends BaseModalComponent implements On
         iconPath: 'assets/images/icons/switch-off.svg'
       }
     };
-  }
-
-  /**
-   * Обработка события на закрытие модала.
-   */
-  public onClose(): void {
-    this.actionEmit(ModalName.AutoCADLayers, false);
   }
 }

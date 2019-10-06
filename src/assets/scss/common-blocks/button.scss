@@ -24,8 +24,7 @@
 
     &--small {
       width: 38px;
-      height: 38px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(0, 0, 0, 0.22);
       padding: 0;
     }
 
@@ -34,8 +33,7 @@
     }
   }
 
-  &-toggler,
-  &-search {
+  &-toggler {
     border: none;
     outline: none;
     background: none;
@@ -79,11 +77,5 @@
 
   &--position-vertical {
     margin-top: 26px;
-  }
-}
-
-.simple {
-  ::ng-deep svg > * {
-    fill: $not-active-color;
   }
 }

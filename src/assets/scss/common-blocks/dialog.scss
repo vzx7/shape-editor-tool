@@ -59,7 +59,7 @@ body.dialog-open {
 // Dialog modal
 ::ng-deep .nsm-dialog {
   position: absolute;
-  top: 50px;
+  top: 10%;
   right: 250px;
   opacity: 1;
   visibility: visible;
@@ -180,16 +180,6 @@ body.dialog-open {
     &--border-top {
       border-top: 0.5px solid rgba(0, 0, 0, 0.33);
     }
-
-    &--border-bottom {
-      border-bottom: 0.5px solid rgba(0, 0, 0, 0.33);
-    }
-
-      &--grey {
-        background-color: #ececec;
-        padding: 5px;
-        margin-top: 5px;
-      }
   }
 
   .status {
@@ -199,15 +189,10 @@ body.dialog-open {
     &--chosen {
       background-color: #ececec;
       padding: 15px;
-      padding-bottom: 70px;
 
       .card__header {
         margin-top: 30px;
       }
-    }
-
-    &--no-background {
-      margin: 15px;
     }
   }
 
@@ -220,17 +205,14 @@ body.dialog-open {
   }
 
   .info {
+    margin-top: 20px;
     display: flex;
     justify-content: flex-start;
 
     &__item {
-      padding-right: 10px;
+      padding-right: 30px;
       display: flex;
       flex-direction: column;
-
-      &--small {
-        width: 30%;
-      }
     }
   }
 
@@ -238,13 +220,11 @@ body.dialog-open {
     &-22 {
       font-size: 20px;
       line-height: 24px;
-      word-wrap: break-word;
     }
 
     &-24 {
       font-size: 24px;
       line-height: 29px;
-      word-wrap: break-word;
     }
   }
 
@@ -264,7 +244,6 @@ body.dialog-open {
     justify-content: space-between;
     width: 100%;
     margin-top: 15px;
-    padding: 10px 0;
   }
 
   &--active {

@@ -13,8 +13,6 @@ import { ModalName } from 'modules/shared/enums/modal-name.enum';
 import { StorageService } from 'modules/shared/services/storage/storage.service';
 import { Stand } from 'modules/shared/interfaces/schema/stand';
 import { ObjectStatus } from 'modules/shared/enums/object-status.enum';
-import { ToastService } from 'core/services/toaster/toast.service';
-import { ThrowStmt } from '@angular/compiler';
 
 /**
  * Компонент модала создания стенда.
@@ -53,17 +51,11 @@ export class CreateStandComponent extends BaseModalComponent implements OnInit {
    */
   public standSquare: string;
 
-  /**
-   * Ошибки для показа
-   */
-  public errors: string[];
-
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
     private readonly standsService: StandsService,
     public readonly formService: FormService,
     private readonly fb: FormBuilder,
-    private readonly toastService: ToastService,
     private readonly editorStateService: EditorStateService,
     private readonly storageService: StorageService
   ) {
@@ -75,12 +67,10 @@ export class CreateStandComponent extends BaseModalComponent implements OnInit {
         this.calculateStandSquare();
       }
     });
-    this.errors = [];
   }
 
   public ngOnInit(): void {
     this.initForm();
-
   }
 
   // tslint:disable-next-line:use-life-cycle-interface
@@ -105,10 +95,9 @@ export class CreateStandComponent extends BaseModalComponent implements OnInit {
 
   /**
    * Сохранение нового полигона.
-   * @return флаг
    */
-  public onSave(): boolean  {
-    if (this.standId && this.formService.validateForm(this.form)) {
+  public onSave(): void {
+    if (this.standId && this.form.valid) {
       this.editorStateService.modeHandler.emit({
         isEditMode: false
       });
@@ -120,13 +109,7 @@ export class CreateStandComponent extends BaseModalComponent implements OnInit {
       this.standId = null;
       super.closeModal(ModalName.CreateStand);
       this.resetForm(this.form, this.ngForm);
-
-      return true;
-      } else {
-        this.showErrors();
-
-        return false;
-      }
+    }
   }
 
   /**
@@ -135,26 +118,6 @@ export class CreateStandComponent extends BaseModalComponent implements OnInit {
   public onClose(): void {
     this.isAddGeometryStart = false;
     super.actionEmit(ModalName.CreateStand, false);
-  }
-
-  /**
-   * Показ ошибок, если форма невалидна
-   */
-  public showErrors(): void {
-    Object.keys(this.form.controls).forEach((key) => {
-      const control = this.form.get(key);
-      let message = '';
-
-      if (control.invalid) {
-        if (key === 'number') {
-          message = 'Пожалуйста введите номер стенда';
-          this.errors.push(message);
-        }
-        this.errors.forEach((msg) => {
-          this.toastService.showError(msg);
-        });
-      }
-    });
   }
 
   /**

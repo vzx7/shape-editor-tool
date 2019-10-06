@@ -8,10 +8,6 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthGuard } from './core/guards/auth.guard';
-import { ToastService } from 'core/services/toaster/toast.service';
-import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ErrorsHandler } from 'core/services/errors/errors-handler.service';
 
 /**
  * Базовый модуль приложения.
@@ -22,8 +18,6 @@ import { ErrorsHandler } from 'core/services/errors/errors-handler.service';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
     InlineSVGModule.forRoot(),
     RouterModule.forRoot(
       [
@@ -41,10 +35,6 @@ import { ErrorsHandler } from 'core/services/errors/errors-handler.service';
 
     )
   ],
-  bootstrap: [AppComponent],
-  providers: [
-    ToastService,
-    ErrorsHandler
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,50 +1,36 @@
-<div ngDraggable class="draggable draggable--pavilion">
-  <ngx-smart-modal
-    #modal
-    [identifier]="modalName.Pavilions"
-    (onClose)="onClose()"
-  >
-    <div class="dialog-content">
-      <h2>Павильоны участники выставки</h2>
-      <perfect-scrollbar style="max-height: 65vh;">
-        <div
-          *ngFor="let hall of halls"
-          class="card card--bordered clickable"
-          (click)="onSelectHall(hall)"
-          [ngClass]="{ 'card--active': hall.id === selectedHallId }"
-        >
-          <div class="info__item">
-            <div class="card__header">Место для размещения</div>
-            <div class="card__text-24">{{ hall.pavilion }}</div>
-          </div>
-          <div class="card__item card__item--space-between">
-            <div class="status">
-              <div class="card__header">Экспозиционная площадь</div>
-              <div class="card__text-22">{{ hall.square }} м<sup>2</sup></div>
-            </div>
-            <div class="info__item">
-              <div class="card__header">Свободно</div>
-              <div class="card__text-24">{{ hall.freeToBook }}</div>
-            </div>
-          </div>
-          <div class="card__item card__item--space-between">
-            <div class="status">
-              <div class="card__header">Свободно</div>
-              <div class="card__text-22">
-                {{ hall.availible }} м <sup>2</sup>
-              </div>
-            </div>
-            <div class="status">
-              <div class="card__header">Резерв</div>
-              <div class="card__text-22">{{ hall.reserve }} м <sup>2</sup></div>
-            </div>
-            <div class="info__item">
-              <div class="card__header">Продано</div>
-              <div class="card__text-24">{{ hall.sold }} м <sup>2</sup></div>
-            </div>
-          </div>
+<ngx-smart-modal #modal [identifier]="modalName.Pavilions" (onClose)="onClose()">
+  <div class="dialog-content">
+    <h2>Павильоны участники выставки</h2>
+    <div *ngFor="let hall of halls" class="card card--bordered clickable"
+    (click)="onSelectHall(hall)" [ngClass]="{'card--active': hall.id === storageService.id}">
+      <div class="info__item">
+        <div class="card__header">Место для размещения</div>
+        <div class="card__text-24">{{hall.pavilion}}</div>
+      </div>
+      <div class="card__item card__item--space-between">
+        <div class="status">
+          <div class="card__header">Экспозиционная площадь</div>
+          <div class="card__text-22">{{hall.square}} м<sup>2</sup></div>
         </div>
-      </perfect-scrollbar>
+        <div class="info__item">
+          <div class="card__header">Свободно</div>
+          <div class="card__text-24">{{hall.freeToBook}}</div>
+        </div>
+      </div>
+      <div class="card__item card__item--space-between">
+        <div class="status">
+          <div class="card__header">Свободно</div>
+          <div class="card__text-22">{{hall.availible}} м <sup>2</sup></div>
+        </div>
+        <div class="status">
+          <div class="card__header">Резерв</div>
+          <div class="card__text-22">{{hall.reserve}} м <sup>2</sup></div>
+        </div>
+        <div class="info__item">
+          <div class="card__header">Продано</div>
+          <div class="card__text-24">{{hall.sold}} м <sup>2</sup></div>
+        </div>
+      </div>
     </div>
-  </ngx-smart-modal>
-</div>
+  </div>
+</ngx-smart-modal>

@@ -1,6 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { StorageService } from 'modules/shared/services/storage/storage.service';
-import { UploadSchemaComponent } from '../upload-schema/upload-schema.component';
+import { Component, OnInit } from '@angular/core';
 
 /**
  * Компонент инструмента "Тип схемы"
@@ -11,11 +9,6 @@ import { UploadSchemaComponent } from '../upload-schema/upload-schema.component'
   styleUrls: ['./schema-type-panel.component.scss']
 })
 export class SchemaTypePanelComponent implements OnInit {
-
-  /**
-   * Модал.
-   */
-  @ViewChild('modal') public modal: UploadSchemaComponent;
 
   /**
    * Если активен инструмент импорта
@@ -37,9 +30,7 @@ export class SchemaTypePanelComponent implements OnInit {
    */
   public iconPath: string;
 
-  constructor(
-    public storageService: StorageService
-  ) {
+  constructor() {
     this.iconPath = 'assets/images/icons/switch-off.svg';
   }
 
@@ -49,12 +40,12 @@ export class SchemaTypePanelComponent implements OnInit {
    * Переключение схемы.
    */
   public switchSchema(): void {
-    if (this.storageService.isWorkingScheme) {
+    if (!this.isWorkSchemaActive) {
       this.iconPath = 'assets/images/icons/switch-on.svg';
     } else {
       this.iconPath = 'assets/images/icons/switch-off.svg';
     }
-    this.storageService.isWorkingScheme = !this.storageService.isWorkingScheme;
+    this.isWorkSchemaActive = !this.isWorkSchemaActive;
   }
 
   /**
@@ -62,7 +53,6 @@ export class SchemaTypePanelComponent implements OnInit {
    */
   public importToWorkSchema(): void {
     this.isImportActive = !this.isImportActive;
-    this.modal.open();
   }
 
   /**

@@ -1,4 +1,4 @@
-import { Toggler } from './toggler';
+import { LayersToggler } from './layers-toggler';
 
 /**
  * Интерфейс тепловой карты
@@ -7,9 +7,9 @@ export interface HotMap {
   /**
    * Выслано на согласование
    */
-  isSent: Toggler;
+  isSent: LayersToggler;
   /**
    * Резерв - Стадия КП
    */
-  isReserve: Toggler;
+  isReserve: LayersToggler;
 }

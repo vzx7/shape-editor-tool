@@ -102,10 +102,5 @@ export class MovementService extends D3Base {
       .on('.dragstart', null)
       .on('.dragend', null)
       .style('cursor', null);
-    d3.select(`.${EditorСSSClasses.PolygonEditArea}`)
-      .style('fill', null)
-      .classed(EditorСSSClasses.PolygonEditArea, false)
-      .classed(EditorСSSClasses.OneEditableLayer, false);
-
   }
 }

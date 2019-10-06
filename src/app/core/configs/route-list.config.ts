@@ -1,10 +1,37 @@
 import { environment } from '../../../environments/environment';
-import { RouteConfig } from 'core/interfaces/router-config';
+
 /**
- * Роут лист приложения.
+ * Настройки приложения.
  */
+export interface RouteConfig {
+
+  host: string;
+  /**
+   * Настройки api
+   */
+  api: {
+    /**
+     * Создание сущности
+     */
+    create: string;
+    /**
+     * Удаление сущности
+     */
+    delete: string;
+    /**
+     * Редактирование сущности
+     */
+    edit: string;
+
+  };
+
+}
+
 export const routes: RouteConfig = {
   host: environment.host,
-  halls: 'halls',
-  stands: 'stands'
+  api: {
+    create: 'create',
+    delete: 'delete',
+    edit: 'edit'
+  }
 };

@@ -21,8 +21,7 @@
             "styles": [
               "src/assets/scss/params.scss",
               "src/assets/scss/mixins.scss",
-              "src/assets/scss/styles.scss",
-              "node_modules/ngx-toastr/toastr.css"
+              "src/assets/scss/styles.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

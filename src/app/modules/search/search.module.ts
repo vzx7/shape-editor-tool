@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { SearchService } from './services/search/search.service';
 
 @NgModule({
   declarations: [SearchPanelComponent],
@@ -10,9 +9,6 @@ import { SearchService } from './services/search/search.service';
     CommonModule,
     InlineSVGModule
   ],
-  exports: [SearchPanelComponent],
-  providers: [
-    SearchService
-  ]
+  exports: [SearchPanelComponent]
 })
 export class SearchModule { }

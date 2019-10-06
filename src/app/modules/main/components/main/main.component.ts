@@ -5,14 +5,11 @@ import { GeometryBase } from 'modules/shared/interfaces/geometry/geometry-base';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { D3Base } from 'modules/shared/classes/d3Base';
 import { StorageService } from 'modules/shared/services/storage/storage.service';
+import schema from './schema.json';
 import { GridService } from 'modules/grid/services/grid.service';
 import { UtilitesService } from 'modules/shared/services/utilites/utilites.service';
 import { WorkAreaService } from 'modules/shared/services/work-area/work-area.service';
 import { GridSpacing } from 'modules/grid/enums/grid-spacing.enum';
-import { Hall } from 'modules/shared/interfaces/schema/hall';
-import { HallSchema } from 'modules/shared/interfaces/schema/hall-schema';
-import { MainService } from 'modules/main/services/main.service';
-import { FileService } from 'modules/shared/modules/file/services/file.service';
 
 /**
  * Базовый компонент рабчей области.
@@ -34,11 +31,6 @@ export class MainComponent extends D3Base implements OnInit {
   public editor: any;
 
   /**
-   * Показываем ли схему.
-   */
-  public isShowSchema: boolean;
-
-  /**
    * Контейнер Рабочей области.
    */
   @ViewChild('mainContainer') private readonly mainContainer: ElementRef;
@@ -48,23 +40,15 @@ export class MainComponent extends D3Base implements OnInit {
     public readonly gridService: GridService,
     public readonly workAreaService: WorkAreaService,
     public readonly utilitesService: UtilitesService,
-    private readonly fileService: FileService,
-    private readonly transformationService: TransformationHelperService,
-    private readonly mainService: MainService
+    private readonly transformationService: TransformationHelperService
   ) {
     super();
+    this.initSchema();
     this.gridService.isActivated.subscribe((value: boolean) => {
       this.isGrid = value;
     });
     this.gridService.stepChoosed.subscribe((step: GridSpacing) => {
       this.gridService.showGrid(step);
-    });
-    this.storageService.pavilionChosen.subscribe((hall: Hall) => {
-      this.showHall(hall);
-    });
-    this.fileService.schemaUploaded.subscribe((schema: HallSchema) => {
-      this.storageService.schema = schema;
-      this.isShowSchema = true;
     });
   }
 
@@ -86,17 +70,11 @@ export class MainComponent extends D3Base implements OnInit {
   }
 
   /**
-   * Показ схемы зала
-   * @param  hall Выбранный зал
+   * Инициализация схемы.
    */
-  private showHall(hall: Hall): void {
-    this.storageService.hallId = hall.id;
-    this.mainService.getHall(hall.id).subscribe((schema: HallSchema) => {
-      this.storageService.schema = schema;
-      setTimeout(() => {
-      this.isShowSchema = true;
-      this.storageService.schemaLoaded.emit();
-      });
-    });
+  public initSchema(): void {
+    this.storageService.schema = {halls: []};
+    this.storageService.schema.halls = schema.halls;
   }
+
 }

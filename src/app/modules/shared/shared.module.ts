@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { FormService } from 'modules/shared/services/form/form.service';
 import { ObjectsHostService } from './services/objects-host/objects-host.service';
 import { StorageService } from './services/storage/storage.service';
@@ -12,17 +13,19 @@ import { EditorStateService } from './services/editor-state/editor-state.service
 import { WorkAreaService } from './services/work-area/work-area.service';
 import { ToolActivateService } from './services/tool-activate/tool-activate.service';
 import { SelectAreaService } from './services/select-area/select-area.service';
+import { StandInfoModalComponent } from './components/stand-info-modal/stand-info-modal.component';
+import { StandsService } from './services/stands/stands.service';
 
 /**
- * Модуль для шаринга переиспользуемых частей системы.
+ * @todo описать модуль.
  */
 @NgModule({
-  declarations: [],
+  declarations: [StandInfoModalComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxSmartModalModule.forRoot(),
+    NgxSmartModalModule.forRoot()
   ],
   providers: [
     ObjectsHostService,
@@ -34,11 +37,13 @@ import { SelectAreaService } from './services/select-area/select-area.service';
     EditorStateService,
     WorkAreaService,
     ToolActivateService,
-    SelectAreaService
+    SelectAreaService,
+    StandsService
   ],
   exports: [
     NgxSmartModalModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StandInfoModalComponent
   ]
 })
 export class SharedModule { }

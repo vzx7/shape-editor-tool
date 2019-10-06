@@ -14,12 +14,4 @@ export enum GroupToolNames {
    * Иструемент Зумирования.
    */
   ZoomGroup = 'zooming',
-  /**
-   * Иструемент управление слоями рабочей схемы.
-   */
-  LayersGroup = 'layersGroup',
-  /**
-   * Иструемент Зумирования.
-   */
-  StandsGroup = 'standsGroup',
 }

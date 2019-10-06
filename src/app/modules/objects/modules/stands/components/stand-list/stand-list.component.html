@@ -1,151 +1,45 @@
-<div ngDraggable class="draggable draggable--stand-list">
-  <ngx-smart-modal
-    #modal
-    [identifier]="modalName.StandList"
-    target="body"
-    (onClose)="onCloseStandList()"
-  >
-    <div class="dialog-content">
-      <perfect-scrollbar style="max-height: 55vh;">
-        <div
-          *ngFor="let stand of stands"
-          class="card card--bordered clickable"
-          (click)="showInfo(stand)"
-        >
-          <div class="status">
-            <div class="card__header">Статус</div>
-            <div class="card__text-22">{{ stand.status }}</div>
-          </div>
-          <div class="info">
-            <div class="info__item">
-              <div class="card__header">Id Стенда</div>
-              <div class="card__text-24">{{ stand.id }}</div>
-            </div>
-            <div class="info__item">
-              <div class="card__header">Площадь</div>
-              <div class="card__text-24">{{ stand.square }}</div>
-            </div>
-          </div>
-        </div>
-      </perfect-scrollbar>
-      <div class="card__footer">
-        <button
-          *ngIf="storageService.isWorkingScheme"
-          class="button button--main button--bordered button--rounded-border-5"
-          (click)="addStand()"
-        >
-          Добавить свободный стенд
-        </button>
-      </div>
-    </div>
-  </ngx-smart-modal>
-</div>
-<div ngDraggable class="draggable draggable--stand-info">
-  <ngx-smart-modal
-    class=""
-    #standInfo
-    [identifier]="modalName.StandInfoList"
-    target="body"
-    [closable]="storageService.isWorkingScheme"
-    (onClose)="onCloseStandInfoList()"
-  >
-    <div *ngIf="choosenStand" class="card card--no-border">
-      <div *ngIf="storageService.isWorkingScheme" class="status status--chosen">
-        <button
-          class="button button--main button--bordered button--rounded-border-5"
-          (click)="getBack()"
-        >
-          &larr; Вернуться к списку
-        </button>
-        <div class="card__header">Статус</div>
-        <div class="card__text-22">{{ choosenStand.status }}</div>
-      </div>
+<ngx-smart-modal
+  #modal
+  [identifier]="modalName.StandList"
+  target="body"
+  (onClose)="onCloseStandList()"
+>
+  <div class="dialog-content">
+    <perfect-scrollbar style="max-height: 74vh;" [config]="{}">
       <div
-        *ngIf="!storageService.isWorkingScheme"
-        class="status status--no-background"
+        *ngFor="let stand of stands"
+        class="card card--bordered clickable"
+        (click)="showInfo(stand)"
       >
-        <div class="card__item card__item--space-between">
-          <button
-            class="button button--main button--bordered button--rounded-border-5"
-            (click)="getBack()"
-          >
-            &larr; Варианты размещения
-          </button>
-          <button
-            class="button button--main
-    button-icon--middle button-icon--rounded"
-            [cacheSVG]="false"
-            [inlineSVG]="'assets/images/icons/garbage.svg'"
-          ></button>
+        <div class="status">
+          <div class="card__header">Статус</div>
+          <div class="card__text-22">{{ stand.status }}</div>
         </div>
-        <div class="card__header">Размещение</div>
-        <div class="card__text-22">{{ choosenStand.pavilion }}</div>
-      </div>
-
-      <div class="dialog-content">
         <div class="info">
-          <div class="info__item info__item--small">
+          <div class="info__item">
             <div class="card__header">Id Стенда</div>
-            <div class="card__text-24">{{ choosenStand.id }}</div>
+            <div class="card__text-24">{{ stand.id }}</div>
           </div>
-          <div class="info__item info__item--small">
+          <div class="info__item">
             <div class="card__header">Площадь</div>
-            <div class="card__text-24">{{ choosenStand.square }}</div>
-          </div>
-          <div
-            *ngIf="!storageService.isWorkingScheme"
-            class="info__item
-        info__item--small"
-          >
-            <div class="card__header">Основной вариант</div>
-            <div class="card__text-24"></div>
-          </div>
-        </div>
-        <div
-          *ngIf="!storageService.isWorkingScheme"
-          class="card__item card__item--grey"
-        >
-          <div class="card__header">Название стенда на схеме</div>
-          <div class="card__text-24">{{ choosenStand.company }}</div>
-        </div>
-        <div *ngIf="storageService.isWorkingScheme" class="card__footer">
-          <button
-            [disabled]="isEditActive"
-            (click)="editStand(choosenStand.id)"
-            class="button button--main button--rounded-border-5 button--bordered"
-          >
-            Редактировать
-          </button>
-          <button
-            class="button button--main button--rounded-border-5 button--bordered"
-          >
-            Создать вариант КП
-          </button>
-        </div>
-        <div *ngIf="!storageService.isWorkingScheme">
-          <div
-            class="card__item card__item--space-between card__item--border-top"
-          >
-            <div class="card__text-15">Взаимозачет</div>
-            <button
-              class="button simple button-toggler"
-              [cacheSVG]="false"
-              [inlineSVG]="options ? options.netting.iconPath : iconPath"
-              (click)="switch('netting')"
-            ></button>
-          </div>
-          <div class="card__item card__item--space-between">
-            <div class="card__text-15">VIP</div>
-            <button
-              class="button simple button-toggler"
-              [cacheSVG]="false"
-              [inlineSVG]="options ? options.vip.iconPath : iconPath"
-              (click)="switch('vip')"
-            ></button>
+            <div class="card__text-24">{{ stand.square }}</div>
           </div>
         </div>
       </div>
-    </div>
-  </ngx-smart-modal>
-</div>
-<app-create-stand (closeHandler)="getBack()"></app-create-stand>
+    </perfect-scrollbar>
+    <button
+      class="button button--main button--bordered button--rounded-border-5"
+      (click)="addStand()"
+    >
+      Добавить свободный стенд
+    </button>
+  </div>
+</ngx-smart-modal>
+
+<app-stand-info-modal
+  (closeHandler)="getBack($event)"
+  [choosenStand]="choosenStand"
+  [modalId]="modalName.StandInfo"
+></app-stand-info-modal>
+
+<app-create-stand (closeHandler)="getBack($event)"></app-create-stand>

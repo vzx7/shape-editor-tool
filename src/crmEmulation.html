@@ -1,0 +1,92 @@
+<!-- ЭМУЛЯЦИЯ ОКНА CRM SYSTEM -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CRM</title>
+  <style>
+    .box1 {
+      grid-column-start: 1;
+      grid-column-end: 4;
+      grid-row-start: 1;
+      grid-row-end: 3;
+      display: grid;
+      grid-template-columns: 1fr 1fr 700px;
+    }
+
+    .box3 {
+      grid-column-start: 1;
+      grid-column-end: 4;
+      grid-row-start: 1;
+      grid-row-end: 3;
+      display: grid;
+      grid-template-columns: 1fr 1400px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .wrapper {
+      border: 2px solid #f76707;
+      border-radius: 5px;
+      background-color: #fff4e6;
+    }
+
+    .box {
+      border: 2px solid #ffa94d;
+      border-radius: 5px;
+      background-color: #ffd8a8;
+      padding: 1em;
+      color: #d9480f;
+    }
+
+    .nested {
+      border: 2px solid #ffec99;
+      border-radius: 5px;
+      background-color: #fff9db;
+      padding: 1em;
+      height: 480px;
+    }
+
+    .nested2 {
+      border: 2px solid #ffec99;
+      border-radius: 5px;
+      background-color: #fff9db;
+      padding: 1em;
+      height: 920px;
+    }
+  </style>
+  <script>
+    $(function () {
+      $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+      })
+    })
+  </script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="box box2">HEAD</div>
+    <div class="box box1">
+      <div class="nested">A</div>
+      <div class="nested">B</div>
+      <div class="nested">
+        <iframe src="http://localhost:4200/" width="700" height="450" frameborder="0"></iframe>
+      </div>
+    </div>
+    <div class="box box3">
+      <div class="nested2">A</div>
+      <div class="nested2">
+        <iframe src="http://localhost:4200/" width="1400" height="900" frameborder="0"></iframe>
+      </div>
+    </div>
+    <div class="box box4">FOOTER</div>
+  </div>
+</body>
+
+</html>

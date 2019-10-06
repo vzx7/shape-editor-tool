@@ -1,4 +1,4 @@
-import { Toggler } from './toggler';
+import { LayersToggler } from './layers-toggler';
 
 /**
  * Интерфейс Мастер-Плана
@@ -7,13 +7,13 @@ export interface MasterPlan {
   /**
    * Выставлен счет
    */
-  isBilling: Toggler;
+  isBilling: LayersToggler;
   /**
    * Тепловая карта.
    */
-  isNegotiation: Toggler;
+  isNegotiation: LayersToggler;
   /**
    * Свободные стенды
    */
-  isFree: Toggler;
+  isFree: LayersToggler;
 }

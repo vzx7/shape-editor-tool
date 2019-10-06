@@ -88,11 +88,7 @@ export class FormService {
       const controls = form.controls;
       // Если форма не валидна, то помечаем все контролы как touched
       Object.keys(controls)
-        .forEach((controlName) => {
-          controls[controlName].markAsTouched({ onlySelf: true });
-          controls[controlName].markAsDirty({ onlySelf: true });
-        }
-        );
+        .forEach((controlName) => controls[controlName].markAsTouched({ onlySelf: true }));
       // Прерывание выполнения метода
 
       return false;

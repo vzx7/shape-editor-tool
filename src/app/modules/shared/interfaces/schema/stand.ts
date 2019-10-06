@@ -8,7 +8,7 @@ export interface Stand extends SchemaBaseEntity {
   /**
    * Площадь стенда.
    */
-  number?: string;
+  number?: number;
 
   /**
    * Геометрия стенда.
@@ -29,14 +29,4 @@ export interface Stand extends SchemaBaseEntity {
    * Статус.
    */
   status?: ObjectStatus;
-
-  /**
-   * Название стенда на схеме.
-   */
-  name?: string;
-
-  /**
-   * Название участника
-   */
-  company?: string;
 }

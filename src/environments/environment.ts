@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  host: `${window.location.origin}/api/`
+  host: 'test-host'
 };

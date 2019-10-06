@@ -1,7 +1,5 @@
 @import "params.scss";
 @import "mixins.scss";
-@import "~perfect-scrollbar/css/perfect-scrollbar.css";
-@import '~ngx-toastr/toastr';
 
 body {
   @include font-base;
@@ -60,10 +58,3 @@ TODO замменить на стили из дизайна.
   cursor: pointer;
 }
 
-.draggable {
-  cursor: move;
-}
-
-.hidden {
-  visibility: hidden;
-}

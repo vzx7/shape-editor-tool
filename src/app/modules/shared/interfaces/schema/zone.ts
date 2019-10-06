@@ -5,5 +5,4 @@ import { SchemaBaseEntity } from './schema-base-entity';
  */
 export interface Zone extends SchemaBaseEntity {
   geometry: Polygon;
-  name?: string;
 }

@@ -11,7 +11,6 @@ import { StorageService } from 'modules/shared/services/storage/storage.service'
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { ObjectType } from 'modules/shared/enums/object-type.enum';
 import { SelectAreaService } from 'modules/shared/services/select-area/select-area.service';
-import { ErrorsHandler } from 'core/services/errors/errors-handler.service';
 
 /**
  * Сервис для массового выделения объектов.
@@ -47,7 +46,6 @@ export class MultiSelectService extends D3Base {
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
     private readonly selectAreaService: SelectAreaService,
-    private readonly errorHandler: ErrorsHandler,
     private readonly transformationHelperService: TransformationHelperService,
     public readonly storageService: StorageService
   ) {
@@ -84,27 +82,21 @@ export class MultiSelectService extends D3Base {
    * @param stands Выбранные стенды
    */
   public deleteStands(stands: Stand[]): void {
-      try {
-        stands.forEach((stand) => {
-          this.storageService.removeObject(this.standType, stand.id);
-        });
-      } catch (error) {
-        this.errorHandler.showError(error, error);
-      }
-
-  }
-
-  /**
-   * Перевыбираем стенды после редактирования.
-   * @param stands Выбранные рание стенды.
-   */
-  public reSelectStands(stands: Stand[]): void {
+    /**
+     * const body = [];
+     */
     stands.forEach((stand) => {
-      const node = this.d3.select(`g[data-id="${stand.id}"] path`);
-      if (!node.classed('selected')) {
-        node.classed('selected', true);
-      }
+      /**
+       * body.push(stand.id);
+       */
+      this.storageService.removeObject(this.standType, stand.id);
     });
+    /**
+     * this.requestService.post(routes.api.delete, body);
+     */
+
+    // TODO раскоментить, когда будет готов бэк
+    this.standsDeleted.emit(stands);
   }
 
   /**
@@ -119,7 +111,7 @@ export class MultiSelectService extends D3Base {
    * @return Stand[]
    */
   private getInnerStands(): Stand[] {
-    const stands = this.storageService.schema.stands;
+    const stands = this.storageService.schema.halls[0].stands;
 
     return stands.filter((item) => {
       const firstPoint = item.geometry.bound[0];

@@ -1,10 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ToolNames } from 'modules/shared/enums/tool-names.enum';
 import { PavilionService } from 'modules/pavilion/services/pavilion.service';
 import { Tool } from 'modules/shared/interfaces/tools/tool';
 import { ModalState } from 'modules/shared/interfaces/modal/modal-state';
-import { PavilionsModalComponent } from '../pavilions-modal/pavilions-modal.component';
-import { ModalName } from 'modules/shared/enums/modal-name.enum';
 
 /**
  * Компонент для выбора павилиона
@@ -15,10 +13,6 @@ import { ModalName } from 'modules/shared/enums/modal-name.enum';
   styleUrls: ['./pavilions.component.scss']
 })
 export class PavilionsComponent implements Tool {
-  /**
-   * Компонент модала.
-   */
-  @ViewChild('modal') public modal: PavilionsModalComponent;
   public isActive: boolean;
   /**
    * Название модала.
@@ -28,7 +22,7 @@ export class PavilionsComponent implements Tool {
   /**
    * Лэйбл на кнопке.
    */
-  public label: { name: string };
+  public label: {name: string};
   constructor(
     public pavilionService: PavilionService
   ) {
@@ -45,14 +39,8 @@ export class PavilionsComponent implements Tool {
     }
     this.pavilionService.selectOpened.emit(this.isActive);
   }
-  public activateTool(): void {
-    this.isActive = true;
-    this.modal.open();
-  }
-  public deactivateTool(): void {
-    this.isActive = false;
-    this.modal.close();
-  }
+  public activateTool(): void { this.isActive = true; }
+  public deactivateTool(): void { this.isActive = false; }
 
   /**
    * Настраиваем активность кнопки на панели.

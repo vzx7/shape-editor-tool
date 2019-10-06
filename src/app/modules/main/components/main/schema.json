@@ -11,9 +11,6 @@
       "stands": [
         {
           "id": "a774fe9f-2a3f-4fd0-a28b-8bdc0b4bc78c",
-          "number": "i266",
-          "name": "Name of the stand",
-          "company": "Some company",
           "geometry": {
             "bound": [
               {
@@ -21,7 +18,7 @@
                 "y": -11.5
               },
               {
-              "x": 36.5,
+                "x": 36.5,
                 "y": -11.5
               },
               {
@@ -129,9 +126,6 @@
         },
         {
           "id": "a30386af-7ecb-43d2-877f-6c0469d35cd7",
-          "number": "i234456",
-          "name": "Some name",
-          "company": "Another company",
           "geometry": {
             "bound": [
               {

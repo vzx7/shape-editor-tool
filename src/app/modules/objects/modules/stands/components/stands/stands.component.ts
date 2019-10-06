@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToolNames } from 'modules/shared/enums/tool-names.enum';
 import { StandsService } from 'modules/shared/services/stands/stands.service';
 import { ModalState } from 'modules/shared/interfaces/modal/modal-state';
 import { Tool } from 'modules/shared/interfaces/tools/tool';
-import { StandListComponent } from '../stand-list/stand-list.component';
+import { StorageService } from 'modules/shared/services/storage/storage.service';
 
 /**
  * Компонент инструмента "Стенды".
@@ -14,13 +14,7 @@ import { StandListComponent } from '../stand-list/stand-list.component';
   styleUrls: ['./stands.component.scss']
 })
 export class StandsComponent implements Tool {
-  /**
-   * Модал.
-   */
-  @ViewChild('modal') public modal: StandListComponent;
-
   public isActive: boolean;
-
   /**
    * Название компонента.
    */
@@ -28,6 +22,7 @@ export class StandsComponent implements Tool {
 
   constructor(
     public standsService: StandsService,
+    private readonly storageService: StorageService
   ) { }
 
   /**
@@ -39,16 +34,15 @@ export class StandsComponent implements Tool {
     } else {
       this.activateTool();
     }
+    this.standsService.isActivated.emit(this.isActive);
   }
 
   public activateTool(): void {
     this.isActive = true;
-    this.modal.open();
   }
 
   public deactivateTool(): void {
     this.isActive = false;
-    this.modal.close();
   }
   /**
    * Настраиваем активность кнопки на панели.

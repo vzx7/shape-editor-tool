@@ -1,13 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { D3Base } from 'modules/shared/classes/d3Base';
+import { ObjectsHostService } from '../objects-host/objects-host.service';
 import { Polygon } from 'modules/shared/interfaces/geometry/polygon';
-import { ObjectsHostService } from 'modules/shared/services/objects-host/objects-host.service';
-import { EditorStateService } from '../editor-state/editor-state.service';
-import { ObjectType } from 'modules/shared/enums/object-type.enum';
-import { ToolNames } from 'modules/shared/enums/tool-names.enum';
-import { EditorMode } from 'modules/shared/enums/editor-mode.enum';
-import { Stand } from 'modules/shared/interfaces/schema/stand';
-import { StorageService } from '../storage/storage.service';
 
 /**
  * Сервис для работы со стендами.
@@ -15,12 +9,16 @@ import { StorageService } from '../storage/storage.service';
 @Injectable()
 export class StandsService extends D3Base {
 
+  /**
+   * Событие открытие списка стендов
+   */
+  public isActivated: EventEmitter<boolean>;
+
   constructor(
-    private readonly objectsHost: ObjectsHostService,
-    private readonly editorStateService: EditorStateService,
-    private readonly storageService: StorageService
+    private readonly objectsHost: ObjectsHostService
   ) {
     super();
+    this.isActivated = new EventEmitter<boolean>();
   }
 
   /**
@@ -38,51 +36,14 @@ export class StandsService extends D3Base {
       geometry = <Polygon>obj.geometry;
     }
 
-    let square = Math.abs(this.d3.polygonArea(<[number, number][]>geometry.bound.map((v) => [v.x, v.y])));
+    let square = Math.abs(this.d3.polygonArea(<[number, number][]>geometry.bound.map((v) => [ v.x, v.y ])));
 
     if (geometry.holes) {
       geometry.holes.forEach((hole) => {
-        square -= Math.abs(this.d3.polygonArea(<[number, number][]>hole.map((v) => [v.x, v.y])));
+        square -= Math.abs(this.d3.polygonArea(<[number, number][]>hole.map((v) => [ v.x, v.y ])));
       });
     }
 
     return square ? square : 0;
-  }
-
-  /**
-   * Редактировать стенд.
-   * @param id ID стенда.
-   */
-  public editStand(id: string): void {
-    this.editorStateService.modeHandler.emit({
-      isEditMode: true,
-      objectType: ObjectType.Stand,
-      toolName: ToolNames.PolygonTool,
-      editorMode: EditorMode.Update,
-      objectId: id
-    });
-  }
-
-  /**
-   * Сохранить изминение площади стенда.
-   * @param choosenStand стенд.
-   * @param uuid uuid объекта..
-   * @return Stand
-   */
-  public updateStand(choosenStand: Stand, uuid: string): Stand {
-    if (!choosenStand || !uuid) { return; }
-    choosenStand = this.storageService.getObject(ObjectType.Stand, choosenStand.id);
-    choosenStand.square = Number(this.getSquareStand(uuid).toFixed());
-
-    return choosenStand;
-  }
-
-  /**
-   * Вызываем событие деактивации редактора.
-   */
-  public doEditorDeactivateEmit(): void {
-    this.editorStateService.modeHandler.emit({
-      isEditMode: false
-    });
   }
 }

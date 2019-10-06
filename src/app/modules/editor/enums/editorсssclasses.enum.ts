@@ -49,21 +49,5 @@ export enum EditorСSSClasses {
   /**
    * Класс добавляемый при создание внутреннего контура.
    */
-  CreateHoleActive = 'create-hole-active',
-  /**
-   * Класс для линии в инструменте ротатор.
-   */
-  RotatorLineUtil = 'rotator-line-util',
-  /**
-   * Класс для rect в инструменте ротатор.
-   */
-  RotatorRectUtil = 'rotator-rect-util',
-  /**
-   * Класс для рамки вокруг объекта в инструменте ротатор.
-   */
-  RotatorBorderUtil = 'rotator-border-util',
-  /**
-   * Класс для элемента, который выбран для вращения.
-   */
-  RotatorElementSelected = 'element-selected'
+  CreateHoleActive = 'create-hole-active'
 }
