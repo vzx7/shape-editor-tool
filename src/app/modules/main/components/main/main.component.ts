@@ -75,6 +75,6 @@ export class MainComponent extends D3Base implements OnInit {
   public initSchema(): void {
     this.storageService.schema = {halls: []};
     this.storageService.schema.halls = schema.halls;
+    this.storageService.pavilionChosen.emit(schema.halls[0]);
   }
-
 }
